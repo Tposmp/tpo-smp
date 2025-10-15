@@ -4,8 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>TPO SMP - Minecraft Server</title>
-<link rel="icon" type="image/png" href="tpoicon64.png">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+<link rel="icon" type="image/png" href="assets/tpoicon64.png"/>
 <style>
 html, body {
   height: 100%;
@@ -155,10 +155,10 @@ footer {
   <header>
     <nav class="minecraft-nav">
       <ul class="nav-buttons">
-        <li><a href="#" class="minecraft-button active" data-target="home">🏠 Home</a></li>
-        <li><a href="#" class="minecraft-button mc-darkred" data-target="vote">🗳️ Vote</a></li>
-        <li><a href="#" class="minecraft-button mc-darkred" data-target="store">🛒 Store</a></li>
-        <li><a href="#" class="minecraft-button" data-target="staff">👥 Staff</a></li>
+        <li><a href="#home" class="minecraft-button active">🏠 Home</a></li>
+        <li><a href="#vote" class="minecraft-button mc-darkred">🗳️ Vote</a></li>
+        <li><a href="#store" class="minecraft-button mc-darkred">🛒 Store</a></li>
+        <li><a href="#staff" class="minecraft-button">👥 Staff</a></li>
       </ul>
     </nav>
   </header>
@@ -217,53 +217,10 @@ footer {
 </div>
 
 <script>
-// Navigation
+// Navigation buttons
 document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
-    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-    const target = btn.dataset.target;
-    if (document.getElementById(target)) document.getElementById(target).classList.add('active');
-    document.querySelectorAll('.nav-buttons .minecraft-button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
-
-// Player count
-function fetchPlayerCount(){
-  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
-    .then(res => res.json())
-    .then(data => {
-      const online = data?.players?.online ?? 0;
-      const max = data?.players?.max ?? 0;
-      document.getElementById('player-count').textContent = `${online}/${max}`;
-    })
-    .catch(()=> { document.getElementById('player-count').textContent = 'Error'; });
-}
-fetchPlayerCount();
-setInterval(fetchPlayerCount, 15000);
-
-// Copy IP
-document.getElementById('ip-button').addEventListener('click', () => {
-  navigator.clipboard.writeText('tposmp.online').then(() => {
-    const sub = document.getElementById('ip-subtext');
-    sub.textContent = 'Copied!';
-    setTimeout(()=> sub.textContent = 'Click to copy', 1500);
-  });
-});
-
-// Footer hover
-document.querySelectorAll('.social-links .gray-button').forEach(button => {
-  button.addEventListener('mouseenter', () => {
-    button.textContent = 'Coming Soon';
-    button.style.color = 'yellow';
-  });
-  button.addEventListener('mouseleave', () => {
-    button.textContent = button.getAttribute('data-original');
-    button.style.color = '';
-  });
-});
-</script>
-</body>
-</html>
-
+    const target = btn.getAttribute('href').substring(1);
+    if (document.getElementById(target)) {
+      document.querySelectorAll('section').forEach
