@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>TPO SMP - Minecraft Server</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+<style>
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+  color: #fff;
+  font-family: 'Press Start 2P', cursive;
+  overflow-x: hidden;
+}
+.minecraft-background {
+  background-color: #333333;
+  min-height: 100vh;
+  padding-bottom: 50px;
+}
+.minecraft-nav {
+  background: rgba(0,0,0,0.6);
+  text-align: center;
+  padding: 15px;
+}
+.nav-buttons {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  gap: 10px;
+}
+.nav-buttons .minecraft-button {
+  background: #3c8527;
+  color: #fff;
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 3px solid #2b611c;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.nav-buttons .minecraft-button:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+.nav-buttons .minecraft-button.active {
+  background: #63c244;
+}
+section {
+  display: none;
+  padding: 60px 20px;
+  text-align: center;
+}
+section.active { display: block; }
+.main-logo {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 200px;
+  border-radius: 10px;
+}
+#ip-button {
+  display: inline-block;
+  font-size: 18px;
+  margin-top: 20px;
+  background: #3c8527;
+  border: 3px solid #2b611c;
+  color: #fff;
+  padding: 10px 30px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+#ip-button:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 15px rgba(255,255,255,0.7);
+}
+#ip-subtext {
+  display: block;
+  font-size: 14px;
+  color: #fff;
+  margin-top: 6px;
+}
+.players-online {
+  margin-top: 22px;
+}
+.players-online span, .players-online p { color: #FFD700; }
+.players-online span { font-size: 18px; font-weight: 700; }
+.players-online p { margin-top: 6px; font-size: 12px; }
+.offer-cards, .vote-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 24px;
+}
+.offer-card, .vote-card {
+  background: rgba(20,20,20,0.85);
+  border: 3px solid #3c8527;
+  border-radius: 10px;
+  width: 240px;
+  padding: 18px;
+  color: #fff;
+  text-align: left;
+  line-height: 1.3;
+  font-size: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.offer-card:hover, .vote-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+footer {
+  background: rgba(0,0,0,0.7);
+  text-align: center;
+  padding: 30px 20px;
+  margin-top: 50px;
+  color: #fff;
+}
+.footer-content p { margin: 0 0 10px; font-size: 12px; }
+.social-links { display:flex; justify-content:center; gap:10px; }
+.minecraft-button {
+  display: inline-block;
+  background: #3c8527;
+  color: #fff;
+  padding: 10px 24px;
+  text-decoration: none;
+  border: 3px solid #2b611c;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Press Start 2P', cursive;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.minecraft-button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 10px rgba(255,255,255,0.5);
+}
+.green-button { background: #3c8527; border: 3px solid #2b611c; }
+.gray-button { background: #555; border: 3px solid #444; color: #ccc; }
+.gray-button:hover { background: #666; color: #fff; }
+.mc-gold { color: #FFD700; }
+.mc-darkred { color: #AA0000; }
+@media (max-width:520px){
+  .offer-card,.vote-card { width: 90%; }
+  .main-logo { width: 160px; }
+}
+</style>
+</head>
+<body>
+<div class="minecraft-background">
+  <header>
+    <nav class="minecraft-nav">
+      <ul class="nav-buttons">
+        <li><a href="#" class="minecraft-button active" data-target="home">🏠 Home</a></li>
+        <li><a href="#" class="minecraft-button mc-darkred" data-target="vote">🗳️ Vote</a></li>
+        <li><a href="#" class="minecraft-button mc-darkred" data-target="store">🛒 Store</a></li>
+        <li><a href="#" class="minecraft-button" data-target="staff">👥 Staff</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section id="home" class="active">
+    <img src="assets/logo.png" alt="TPO SMP Logo" class="main-logo" />
+    <button id="ip-button">
+      tposmp.online
+      <span id="ip-subtext">Click to copy</span>
+    </button>
+    <div class="players-online">
+      <span id="player-count">Loading...</span>
+      <p>Playing right now!</p>
+    </div>
+    <h2>What <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
+    <div class="offer-cards">
+      <div class="offer-card">🌎 Land Claim Survival, protect your builds.</div>
+      <div class="offer-card">🐱 Friendly Community, join players who care.</div>
+      <div class="offer-card">⚔️ Optional PvP Areas, stay safe or battle.</div>
+      <div class="offer-card">🎉 Holiday Events, enjoy seasonal fun.</div>
+    </div>
+  </section>
+
+  <section id="vote">
+    <h2><span class="mc-darkred">Vote for</span> <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span></h2>
+    <div class="vote-cards">
+      <a href="https://minecraft.buzz/server/16729" target="_blank" class="vote-card">MinecraftBuzz</a>
+      <a href="https://minecraftservers.org/server/679213" target="_blank" class="vote-card">MinecraftServers.org</a>
+      <a href="https://minecraft-server-list.com/server/515077/" target="_blank" class="vote-card">Minecraft-Server-List.com</a>
+      <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/" target="_blank" class="vote-card">PlanetMinecraft.com</a>
+      <div class="vote-card">Vote Site 5 (coming soon)</div>
+      <div class="vote-card">Vote Site 6 (coming soon)</div>
+    </div>
+  </section>
+
+  <section id="store">
+    <h2 class="mc-darkred">Store</h2>
+    <p>This is currently under development.</p>
+  </section>
+
+  <section id="staff">
+    <h2 class="mc-darkred">Staff Center</h2>
+    <p style="color: #FF5555; font-size: 14px;">Under development</p>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <p>&copy; 2025 TPO SMP. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://discord.gg/2qhf6jCCya" class="minecraft-button green-button">Discord</a>
+        <a href="#" class="minecraft-button gray-button" data-original="YouTube">YouTube</a>
+        <a href="#" class="minecraft-button gray-button" data-original="TikTok">TikTok</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Navigation
+document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+    const target = btn.dataset.target;
+    if (document.getElementById(target)) document.getElementById(target).classList.add('active');
+    document.querySelectorAll('.nav-buttons .minecraft-button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+
+// Player count
+function fetchPlayerCount(){
+  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
+    .then(res => res.json())
+    .then(data => {
+      const online = data?.players?.online ?? 0;
+      const max = data?.players?.max ?? 0;
+      document.getElementById('player-count').textContent = `${online}/${max}`;
+    })
+    .catch(()=> { document.getElementById('player-count').textContent = 'Error'; });
+}
+fetchPlayerCount();
+setInterval(fetchPlayerCount, 15000);
+
+// Copy IP
+document.getElementById('ip-button').addEventListener('click', () => {
+  navigator.clipboard.writeText('tposmp.online').then(() => {
+    const sub = document.getElementById('ip-subtext');
+    sub.textContent = 'Copied!';
+    setTimeout(()=> sub.textContent = 'Click to copy', 1500);
+  });
+});
+
+// Footer hover
+document.querySelectorAll('.social-links .gray-button').forEach(button => {
+  button.addEventListener('mouseenter', () => {
+    button.textContent = 'Coming Soon';
+    button.style.color = 'yellow';
+  });
+  button.addEventListener('mouseleave', () => {
+    button.textContent = button.getAttribute('data-original');
+    button.style.color = '';
+  });
+});
+</script>
+</body>
+</html>
