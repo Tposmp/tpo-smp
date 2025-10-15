@@ -16,138 +16,36 @@ html, body {
   font-family: 'Press Start 2P', cursive;
   overflow-x: hidden;
 }
-.minecraft-background {
-  background-color: #333333;
-  min-height: 100vh;
-  padding-bottom: 50px;
-}
-.minecraft-nav {
-  background: rgba(0,0,0,0.6);
-  text-align: center;
-  padding: 15px;
-}
-.nav-buttons {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: inline-flex;
-  gap: 10px;
-}
-.nav-buttons .minecraft-button {
-  background: #3c8527;
-  color: #fff;
-  padding: 8px 16px;
-  text-decoration: none;
-  border: 3px solid #2b611c;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.nav-buttons .minecraft-button:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
-}
-.nav-buttons .minecraft-button.active {
-  background: #63c244;
-}
-section {
-  display: none;
-  padding: 60px 20px;
-  text-align: center;
-}
+.minecraft-background { background-color: #333333; min-height: 100vh; padding-bottom: 50px; }
+.minecraft-nav { background: rgba(0,0,0,0.6); text-align: center; padding: 15px; }
+.nav-buttons { list-style: none; padding: 0; margin: 0; display: inline-flex; gap: 10px; }
+.nav-buttons .minecraft-button { background: #3c8527; color: #fff; padding: 8px 16px; text-decoration: none; border: 3px solid #2b611c; border-radius: 5px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.nav-buttons .minecraft-button:hover { transform: translateY(-6px); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+.nav-buttons .minecraft-button.active { background: #63c244; }
+section { display: none; padding: 60px 20px; text-align: center; }
 section.active { display: block; }
-.main-logo {
-  display: block;
-  margin: 0 auto 20px auto;
-  width: 200px;
-  border-radius: 10px;
-}
-#ip-button {
-  display: inline-block;
-  font-size: 18px;
-  margin-top: 20px;
-  background: #3c8527;
-  border: 3px solid #2b611c;
-  color: #fff;
-  padding: 10px 30px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-#ip-button:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 0 15px rgba(255,255,255,0.7);
-}
-#ip-subtext {
-  display: block;
-  font-size: 14px;
-  color: #fff;
-  margin-top: 6px;
-}
-.players-online {
-  margin-top: 22px;
-}
+.main-logo { display: block; margin: 0 auto 20px auto; width: 200px; border-radius: 10px; }
+#ip-button { display: inline-block; font-size: 18px; margin-top: 20px; background: #3c8527; border: 3px solid #2b611c; color: #fff; padding: 10px 30px; cursor: pointer; border-radius: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+#ip-button:hover { transform: translateY(-10px); box-shadow: 0 0 15px rgba(255,255,255,0.7); }
+#ip-subtext { display: block; font-size: 14px; color: #fff; margin-top: 6px; }
+.players-online { margin-top: 22px; }
 .players-online span, .players-online p { color: #FFD700; }
 .players-online span { font-size: 18px; font-weight: 700; }
 .players-online p { margin-top: 6px; font-size: 12px; }
-.offer-cards, .vote-cards {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  margin-top: 24px;
-}
-.offer-card, .vote-card {
-  background: rgba(20,20,20,0.85);
-  border: 3px solid #3c8527;
-  border-radius: 10px;
-  width: 240px;
-  padding: 18px;
-  color: #fff;
-  text-align: left;
-  line-height: 1.3;
-  font-size: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.offer-card:hover, .vote-card:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-}
-footer {
-  background: rgba(0,0,0,0.7);
-  text-align: center;
-  padding: 30px 20px;
-  margin-top: 50px;
-  color: #fff;
-}
+.offer-cards, .vote-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 24px; }
+.offer-card, .vote-card { background: rgba(20,20,20,0.85); border: 3px solid #3c8527; border-radius: 10px; width: 240px; padding: 18px; color: #fff; text-align: left; line-height: 1.3; font-size: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.offer-card:hover, .vote-card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
+footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; margin-top: 50px; color: #fff; }
 .footer-content p { margin: 0 0 10px; font-size: 12px; }
 .social-links { display:flex; justify-content:center; gap:10px; }
-.minecraft-button {
-  display: inline-block;
-  background: #3c8527;
-  color: #fff;
-  padding: 10px 24px;
-  text-decoration: none;
-  border: 3px solid #2b611c;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  font-family: 'Press Start 2P', cursive;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
-}
-.minecraft-button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 10px rgba(255,255,255,0.5);
-}
+.minecraft-button { display: inline-block; background: #3c8527; color: #fff; padding: 10px 24px; text-decoration: none; border: 3px solid #2b611c; border-radius: 5px; cursor: pointer; font-size: 14px; font-family: 'Press Start 2P', cursive; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
+.minecraft-button:hover { transform: translateY(-4px); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
 .green-button { background: #3c8527; border: 3px solid #2b611c; }
 .gray-button { background: #555; border: 3px solid #444; color: #ccc; }
 .gray-button:hover { background: #666; color: #fff; }
 .mc-gold { color: #FFD700; }
 .mc-darkred { color: #AA0000; }
-@media (max-width:520px){
-  .offer-card,.vote-card { width: 90%; }
-  .main-logo { width: 160px; }
-}
+@media (max-width:520px){ .offer-card,.vote-card { width: 90%; } .main-logo { width: 160px; } }
 </style>
 </head>
 <body>
@@ -165,14 +63,8 @@ footer {
 
   <section id="home" class="active">
     <img src="assets/logo.png" alt="TPO SMP Logo" class="main-logo" />
-    <button id="ip-button">
-      tposmp.online
-      <span id="ip-subtext">Click to copy</span>
-    </button>
-    <div class="players-online">
-      <span id="player-count">Loading...</span>
-      <p>Playing right now!</p>
-    </div>
+    <button id="ip-button">tposmp.online <span id="ip-subtext">Click to copy</span></button>
+    <div class="players-online"><span id="player-count">Loading...</span><p>Playing right now!</p></div>
     <h2>What <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
     <div class="offer-cards">
       <div class="offer-card">🌎 Land Claim Survival, protect your builds.</div>
@@ -217,10 +109,65 @@ footer {
 </div>
 
 <script>
-// Navigation buttons
+// Navigation
+function openSection(target) {
+  document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+  const section = document.getElementById(target);
+  if(section) section.classList.add('active');
+
+  document.querySelectorAll('.nav-buttons .minecraft-button').forEach(b => b.classList.remove('active'));
+  const btn = document.querySelector(`.nav-buttons .minecraft-button[href="#${target}"]`);
+  if(btn) btn.classList.add('active');
+}
+
+// Buttons click
 document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
     const target = btn.getAttribute('href').substring(1);
-    if (document.getElementById(target)) {
-      document.querySelectorAll('section').forEach
+    openSection(target);
+    history.replaceState(null, null, `#${target}`);
+  });
+});
+
+// Open section based on hash on page load
+const hash = window.location.hash.substring(1);
+if(hash) openSection(hash);
+
+// Player count
+function fetchPlayerCount(){
+  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
+    .then(res => res.json())
+    .then(data => {
+      const online = data?.players?.online ?? 0;
+      const max = data?.players?.max ?? 0;
+      document.getElementById('player-count').textContent = `${online}/${max}`;
+    })
+    .catch(()=> { document.getElementById('player-count').textContent = 'Error'; });
+}
+fetchPlayerCount();
+setInterval(fetchPlayerCount, 15000);
+
+// Copy IP
+document.getElementById('ip-button').addEventListener('click', () => {
+  navigator.clipboard.writeText('tposmp.online').then(() => {
+    const sub = document.getElementById('ip-subtext');
+    sub.textContent = 'Copied!';
+    setTimeout(()=> sub.textContent = 'Click to copy', 1500);
+  });
+});
+
+// Footer hover
+document.querySelectorAll('.social-links .gray-button').forEach(button => {
+  button.addEventListener('mouseenter', () => {
+    button.textContent = 'Coming Soon';
+    button.style.color = 'yellow';
+  });
+  button.addEventListener('mouseleave', () => {
+    button.textContent = button.getAttribute('data-original');
+    button.style.color = '';
+  });
+});
+</script>
+</body>
+</html>
