@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>TPO SMP - Minecraft Server</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap " rel="stylesheet"/>
 <link rel="icon" type="image/png" href="assets/tpoicon64.png"/>
 <style>
 html, body {
@@ -36,7 +36,7 @@ section.active { display: block; }
 .offer-card, .vote-card { background: rgba(20,20,20,0.85); border: 3px solid #3c8527; border-radius: 10px; width: 240px; padding: 18px; color: #fff; text-align: left; line-height: 1.3; font-size: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .offer-card:hover, .vote-card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
 footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; margin-top: 50px; color: #fff; }
-.footer-content p { margin: 0 0 10px; font-size: 12px; }
+.footer-content p { margin: 0 0 10px 0; font-size: 12px; }
 .social-links { display:flex; justify-content:center; gap:10px; }
 .minecraft-button { display: inline-block; background: #3c8527; color: #fff; padding: 10px 24px; text-decoration: none; border: 3px solid #2b611c; border-radius: 5px; cursor: pointer; font-size: 14px; font-family: 'Press Start 2P', cursive; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
 .minecraft-button:hover { transform: translateY(-4px); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
@@ -44,7 +44,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 .gray-button { background: #555; border: 3px solid #444; color: #ccc; }
 .gray-button:hover { background: #666; color: #fff; }
 .mc-gold { color: #FFD700; }
-.mc-darkred { color: #AA0000; }
+.mc-darkred { color: #AA0000; } /* &4 color for SMP and TPO */
 
 /* ---------- Player List Box ---------- */
 #player-list-box {
@@ -78,6 +78,10 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   height: 24px;
   border-radius: 3px;
 }
+.player-entry span.tpo-player {
+  color: #AA0000;
+  font-weight: 700;
+}
 @media (max-width: 720px) {
   #player-list-box {
     position: static;
@@ -89,57 +93,15 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 
 /* ---------- Mobile Optimization Only ---------- */
 @media (max-width: 720px) {
-  /* Make the main logo smaller for mobile */
-  .main-logo {
-    width: 160px;
-    margin-bottom: 16px;
-  }
-
-  /* Offer and vote cards fit smaller screens */
-  .offer-card, .vote-card {
-    width: 90%;
-    padding: 14px;
-    font-size: 11px;
-  }
-
-  /* Player list box fits the screen and moves below main content */
-  #player-list-box {
-    position: static;
-    width: 90%;
-    margin: 20px auto;
-    max-height: none;
-    font-size: 10px;
-  }
-
-  /* Player avatar size slightly smaller */
-  .player-entry img {
-    width: 20px;
-    height: 20px;
-  }
-
-  /* Keep nav buttons the same size, just stack if needed */
-  .nav-buttons {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  /* IP button and subtext adjust to fit mobile */
-  #ip-button {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-  #ip-subtext {
-    font-size: 12px;
-  }
-
-  /* Footer and social links stay readable */
-  .footer-content p {
-    font-size: 10px;
-  }
-  .social-links .minecraft-button {
-    padding: 8px 16px;
-    font-size: 12px;
-  }
+  .main-logo { width: 160px; margin-bottom: 16px; }
+  .offer-card, .vote-card { width: 90%; padding: 14px; font-size: 11px; }
+  #player-list-box { position: static; width: 90%; margin: 20px auto; max-height: none; font-size: 10px; }
+  .player-entry img { width: 20px; height: 20px; }
+  .nav-buttons { flex-wrap: wrap; justify-content: center; }
+  #ip-button { padding: 10px 20px; font-size: 16px; }
+  #ip-subtext { font-size: 12px; }
+  .footer-content p { font-size: 10px; }
+  .social-links .minecraft-button { padding: 8px 16px; font-size: 12px; }
 }
 </style>
 </head>
@@ -172,10 +134,10 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   <section id="vote">
     <h2><span class="mc-darkred">Vote for</span> <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span></h2>
     <div class="vote-cards">
-      <a href="https://minecraft.buzz/server/16729" target="_blank" class="vote-card">MinecraftBuzz</a>
-      <a href="https://minecraftservers.org/server/679213" target="_blank" class="vote-card">MinecraftServers.org</a>
-      <a href="https://minecraft-server-list.com/server/515077/" target="_blank" class="vote-card">Minecraft-Server-List.com</a>
-      <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/" target="_blank" class="vote-card">PlanetMinecraft.com</a>
+      <a href="https://minecraft.buzz/server/16729 " target="_blank" class="vote-card">MinecraftBuzz</a>
+      <a href="https://minecraftservers.org/server/679213 " target="_blank" class="vote-card">MinecraftServers.org</a>
+      <a href="https://minecraft-server-list.com/server/515077/ " target="_blank" class="vote-card">Minecraft-Server-List.com</a>
+      <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/ " target="_blank" class="vote-card">PlanetMinecraft.com</a>
       <div class="vote-card">Vote Site 5 (coming soon)</div>
       <div class="vote-card">Vote Site 6 (coming soon)</div>
     </div>
@@ -195,7 +157,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
     <div class="footer-content">
       <p>&copy; 2025 TPO SMP. All rights reserved.</p>
       <div class="social-links">
-        <a href="https://discord.gg/2qhf6jCCya" class="minecraft-button green-button">Discord</a>
+        <a href="https://discord.gg/2qhf6jCCya " class="minecraft-button green-button">Discord</a>
         <a href="#" class="minecraft-button gray-button" data-original="YouTube">YouTube</a>
         <a href="#" class="minecraft-button gray-button" data-original="TikTok">TikTok</a>
       </div>
@@ -242,21 +204,34 @@ function fetchPlayerCountAndList(){
       document.getElementById('player-count').textContent = `${online}/${max}`;
 
       const listEl = document.getElementById('player-list');
-      const sample = data?.players?.list ?? [];
+      let sample = data?.players?.list ?? [];
+
+      // Move TPO to top if online
+      sample.sort((a,b)=>{
+        const nameA = (a.name_clean||a.name_raw||'').toLowerCase();
+        const nameB = (b.name_clean||b.name_raw||'').toLowerCase();
+        if(nameA==='tpo') return -1;
+        if(nameB==='tpo') return 1;
+        return 0;
+      });
 
       if(sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
       }
 
-      listEl.innerHTML = sample.map(p => `
-        <div class="player-entry">
-          <span>${p.name_clean || p.name_raw || 'Unknown'}</span>
-          <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
-        </div>
-      `).join('');
+      listEl.innerHTML = sample.map(p => {
+        const name = p.name_clean || p.name_raw || 'Unknown';
+        const isTPO = name.toLowerCase() === 'tpo';
+        return `
+          <div class="player-entry">
+            <span class="${isTPO ? 'tpo-player' : ''}">${name}</span>
+            <img src="https://mc-heads.net/avatar/${encodeURIComponent(name)}/32" alt="${name}">
+          </div>
+        `;
+      }).join('');
     })
-    .catch(() => {
+    .catch(()=>{
       document.getElementById('player-count').textContent = 'Error';
       document.getElementById('player-list').innerHTML = '<p style="color:red;">Error loading</p>';
     });
