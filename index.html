@@ -43,9 +43,8 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 .green-button { background: #3c8527; border: 3px solid #2b611c; }
 .gray-button { background: #555; border: 3px solid #444; color: #ccc; }
 .gray-button:hover { background: #666; color: #fff; }
-.mc-gold { color: #FFD700; }
-.mc-darkred { color: #AA0000; }
-.mc-orange { color: #FFAA00; }
+.mc-gold { color: #FFA500; } /* TPO in orange */
+.mc-darkred { color: #AA0000; } /* SMP in dark red */
 
 /* ---------- Player List Box ---------- */
 #player-list-box {
@@ -119,7 +118,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
     <img src="assets/logo.png" alt="TPO SMP Logo" class="main-logo" />
     <button id="ip-button">tposmp.online <span id="ip-subtext">Click to copy</span></button>
     <div class="players-online"><span id="player-count">Loading...</span><p>Playing right now!</p></div>
-    <h2>What <span class="mc-orange">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
+    <h2>What <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
     <div class="offer-cards">
       <div class="offer-card">🌎 Land Claim Survival, protect your builds.</div>
       <div class="offer-card">🐱 Friendly Community, join players who care.</div>
@@ -191,21 +190,21 @@ document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
 const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
 
-// Fetch player count + list
+// Fetch player count + list with TPO at top
 function fetchPlayerCountAndList(){
-  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online ')
+  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
     .then(res => res.json())
     .then(data => {
       const online = data?.players?.online ?? 0;
       const max = data?.players?.max ?? 0;
       document.getElementById('player-count').textContent = `${online}/${max}`;
 
-      const listEl = document.getElementById('player-list');
       let sample = data?.players?.list ?? [];
 
-      // Move "tpo" to top if online
-      sample.sort((a,b) => (a.name_clean?.toLowerCase() === 'tpo' ? -1 : 0));
+      // Move player "TPO" to the top if online
+      sample.sort((a,b) => (a.name_clean === 'TPO' ? -1 : 0));
 
+      const listEl = document.getElementById('player-list');
       if(sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
@@ -213,10 +212,8 @@ function fetchPlayerCountAndList(){
 
       listEl.innerHTML = sample.map(p => `
         <div class="player-entry">
-          <span style="${p.name_clean?.toLowerCase() === 'tpo' ? 'color:#AA0000;font-weight:700;' : ''}">
-            ${p.name_clean || p.name_raw || 'Unknown'}
-          </span>
-          <img src="https://mc-heads.net/avatar/ ${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
+          <span style="color:${p.name_clean === 'TPO' ? '#AA0000' : '#FFD700'}">${p.name_clean || p.name_raw || 'Unknown'}</span>
+          <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
         </div>
       `).join('');
     })
