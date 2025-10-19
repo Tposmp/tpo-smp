@@ -72,11 +72,21 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   align-items: center;
   gap: 8px;
   margin: 6px 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 .player-entry img {
   width: 24px;
   height: 24px;
   border-radius: 3px;
+  border: 2px solid white;
+  transition: transform 0.2s ease;
+}
+.player-entry span {
+  transition: transform 0.2s ease;
+}
+.player-entry:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
 @media (max-width: 720px) {
   #player-list-box {
@@ -216,7 +226,6 @@ function fetchPlayerCountAndList(){
         return;
       }
 
-      // ✅ Fixed: head on the left, name on the right
       listEl.innerHTML = sample.map(p => `
         <div class="player-entry">
           <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
