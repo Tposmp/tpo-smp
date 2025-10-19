@@ -45,6 +45,46 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 .gray-button:hover { background: #666; color: #fff; }
 .mc-gold { color: #FFD700; }
 .mc-darkred { color: #AA0000; }
+
+/* ---------- Player List Box ---------- */
+#player-list-box {
+  position: fixed;
+  top: 120px;
+  right: 20px;
+  background: rgba(0,0,0,0.75);
+  border: 3px solid #3c8527;
+  border-radius: 10px;
+  width: 220px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 10px;
+  z-index: 1000;
+}
+#player-list-box h3 {
+  text-align: center;
+  color: #FFD700;
+  margin: 5px 0 10px 0;
+  font-size: 12px;
+}
+.player-entry {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 6px 0;
+}
+.player-entry img {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+}
+@media (max-width: 720px) {
+  #player-list-box {
+    position: static;
+    margin: 20px auto;
+    width: 80%;
+  }
+}
 @media (max-width:520px){ .offer-card,.vote-card { width: 90%; } .main-logo { width: 160px; } }
 </style>
 </head>
@@ -108,6 +148,12 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   </footer>
 </div>
 
+<!-- Player List Box -->
+<div id="player-list-box">
+  <h3>Online Players</h3>
+  <div id="player-list">Loading...</div>
+</div>
+
 <script>
 // Navigation
 function openSection(target) {
@@ -118,9 +164,16 @@ function openSection(target) {
   document.querySelectorAll('.nav-buttons .minecraft-button').forEach(b => b.classList.remove('active'));
   const btn = document.querySelector(`.nav-buttons .minecraft-button[href="#${target}"]`);
   if(btn) btn.classList.add('active');
+
+  // ✅ Show player list only on home
+  const playerBox = document.getElementById('player-list-box');
+  if (target === 'home') {
+    playerBox.style.display = 'block';
+  } else {
+    playerBox.style.display = 'none';
+  }
 }
 
-// Buttons click
 document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
   btn.addEventListener('click', e => {
     e.preventDefault();
@@ -130,23 +183,41 @@ document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
   });
 });
 
-// Open section based on hash on page load
 const hash = window.location.hash.substring(1);
-if(hash) openSection(hash);
+openSection(hash || 'home');
 
-// Player count
-function fetchPlayerCount(){
+// Fetch player count + list
+function fetchPlayerCountAndList(){
   fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
     .then(res => res.json())
     .then(data => {
       const online = data?.players?.online ?? 0;
       const max = data?.players?.max ?? 0;
       document.getElementById('player-count').textContent = `${online}/${max}`;
+
+      const listEl = document.getElementById('player-list');
+      const sample = data?.players?.list ?? [];
+
+      if(sample.length === 0) {
+        listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
+        return;
+      }
+
+      // ✅ Head on left, name on right
+      listEl.innerHTML = sample.map(p => `
+        <div class="player-entry">
+          <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
+          <span>${p.name_clean || p.name_raw || 'Unknown'}</span>
+        </div>
+      `).join('');
     })
-    .catch(()=> { document.getElementById('player-count').textContent = 'Error'; });
+    .catch(() => {
+      document.getElementById('player-count').textContent = 'Error';
+      document.getElementById('player-list').innerHTML = '<p style="color:red;">Error loading</p>';
+    });
 }
-fetchPlayerCount();
-setInterval(fetchPlayerCount, 15000);
+fetchPlayerCountAndList();
+setInterval(fetchPlayerCountAndList, 15000);
 
 // Copy IP
 document.getElementById('ip-button').addEventListener('click', () => {
