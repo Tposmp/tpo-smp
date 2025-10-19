@@ -43,8 +43,8 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 .green-button { background: #3c8527; border: 3px solid #2b611c; }
 .gray-button { background: #555; border: 3px solid #444; color: #ccc; }
 .gray-button:hover { background: #666; color: #fff; }
-.mc-gold { color: #FFA500; } /* TPO name in orange */
-.mc-darkred { color: #AA0000; } /* SMP name & TPO player red */
+.mc-gold { color: #FFA500; } 
+.mc-darkred { color: #AA0000; }
 
 /* ---------- Player List Box ---------- */
 #player-list-box {
@@ -87,7 +87,6 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 }
 @media (max-width:520px){ .offer-card,.vote-card { width: 90%; } .main-logo { width: 160px; } }
 
-/* ---------- Mobile Optimization Only ---------- */
 @media (max-width: 720px) {
   .main-logo { width: 160px; margin-bottom: 16px; }
   .offer-card, .vote-card { width: 90%; padding: 14px; font-size: 11px; }
@@ -178,7 +177,6 @@ function openSection(target) {
   const btn = document.querySelector(`.nav-buttons .minecraft-button[href="#${target}"]`);
   if(btn) btn.classList.add('active');
 
-  // Show player list only on home
   const playerBox = document.getElementById('player-list-box');
   if(target === 'home') {
     playerBox.style.display = 'block';
@@ -197,7 +195,6 @@ document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
   });
 });
 
-// Load section from hash
 const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
 else openSection('home');
@@ -219,10 +216,11 @@ function fetchPlayerCountAndList(){
         return;
       }
 
+      // ✅ Fixed: head on the left, name on the right
       listEl.innerHTML = sample.map(p => `
         <div class="player-entry">
-          <span class="${p.is_tpo ? 'mc-darkred' : ''}">${p.name_clean || p.name_raw || 'Unknown'}</span>
           <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
+          <span class="${p.is_tpo ? 'mc-darkred' : ''}">${p.name_clean || p.name_raw || 'Unknown'}</span>
         </div>
       `).join('');
     })
