@@ -4,7 +4,7 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>TPO SMP - Minecraft Server</title>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap " rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
 <link rel="icon" type="image/png" href="assets/tpoicon64.png"/>
 <style>
 html, body {
@@ -43,8 +43,8 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 .green-button { background: #3c8527; border: 3px solid #2b611c; }
 .gray-button { background: #555; border: 3px solid #444; color: #ccc; }
 .gray-button:hover { background: #666; color: #fff; }
-.mc-gold { color: #FFA500; } /* TPO in orange */
-.mc-darkred { color: #AA0000; } /* SMP in dark red */
+.mc-gold { color: #FFA500; } /* TPO name in orange */
+.mc-darkred { color: #AA0000; } /* SMP name & TPO player red */
 
 /* ---------- Player List Box ---------- */
 #player-list-box {
@@ -130,10 +130,10 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   <section id="vote">
     <h2><span class="mc-darkred">Vote for</span> <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span></h2>
     <div class="vote-cards">
-      <a href="https://minecraft.buzz/server/16729 " target="_blank" class="vote-card">MinecraftBuzz</a>
-      <a href="https://minecraftservers.org/server/679213 " target="_blank" class="vote-card">MinecraftServers.org</a>
-      <a href="https://minecraft-server-list.com/server/515077/ " target="_blank" class="vote-card">Minecraft-Server-List.com</a>
-      <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/ " target="_blank" class="vote-card">PlanetMinecraft.com</a>
+      <a href="https://minecraft.buzz/server/16729" target="_blank" class="vote-card">MinecraftBuzz</a>
+      <a href="https://minecraftservers.org/server/679213" target="_blank" class="vote-card">MinecraftServers.org</a>
+      <a href="https://minecraft-server-list.com/server/515077/" target="_blank" class="vote-card">Minecraft-Server-List.com</a>
+      <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/" target="_blank" class="vote-card">PlanetMinecraft.com</a>
       <div class="vote-card">Vote Site 5 (coming soon)</div>
       <div class="vote-card">Vote Site 6 (coming soon)</div>
     </div>
@@ -153,7 +153,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
     <div class="footer-content">
       <p>&copy; 2025 TPO SMP. All rights reserved.</p>
       <div class="social-links">
-        <a href="https://discord.gg/2qhf6jCCya " class="minecraft-button green-button">Discord</a>
+        <a href="https://discord.gg/2qhf6jCCya" class="minecraft-button green-button">Discord</a>
         <a href="#" class="minecraft-button gray-button" data-original="YouTube">YouTube</a>
         <a href="#" class="minecraft-button gray-button" data-original="TikTok">TikTok</a>
       </div>
@@ -161,8 +161,8 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   </footer>
 </div>
 
-<!-- Player List Box -->
-<div id="player-list-box">
+<!-- Player List Box (shown only on home page) -->
+<div id="player-list-box" style="display:none;">
   <h3>Online Players</h3>
   <div id="player-list">Loading...</div>
 </div>
@@ -177,6 +177,15 @@ function openSection(target) {
   document.querySelectorAll('.nav-buttons .minecraft-button').forEach(b => b.classList.remove('active'));
   const btn = document.querySelector(`.nav-buttons .minecraft-button[href="#${target}"]`);
   if(btn) btn.classList.add('active');
+
+  // Show player list only on home
+  const playerBox = document.getElementById('player-list-box');
+  if(target === 'home') {
+    playerBox.style.display = 'block';
+    fetchPlayerCountAndList();
+  } else {
+    playerBox.style.display = 'none';
+  }
 }
 
 document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
@@ -187,10 +196,13 @@ document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
     history.replaceState(null, null, `#${target}`);
   });
 });
+
+// Load section from hash
 const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
+else openSection('home');
 
-// Fetch player count + list with TPO at top
+// Fetch player count + list
 function fetchPlayerCountAndList(){
   fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
     .then(res => res.json())
@@ -199,12 +211,9 @@ function fetchPlayerCountAndList(){
       const max = data?.players?.max ?? 0;
       document.getElementById('player-count').textContent = `${online}/${max}`;
 
-      let sample = data?.players?.list ?? [];
-
-      // Move player "TPO" to the top if online
-      sample.sort((a,b) => (a.name_clean === 'TPO' ? -1 : 0));
-
       const listEl = document.getElementById('player-list');
+      const sample = data?.players?.list ?? [];
+
       if(sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
@@ -212,7 +221,7 @@ function fetchPlayerCountAndList(){
 
       listEl.innerHTML = sample.map(p => `
         <div class="player-entry">
-          <span style="color:${p.name_clean === 'TPO' ? '#AA0000' : '#FFD700'}">${p.name_clean || p.name_raw || 'Unknown'}</span>
+          <span class="${p.is_tpo ? 'mc-darkred' : ''}">${p.name_clean || p.name_raw || 'Unknown'}</span>
           <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
         </div>
       `).join('');
@@ -222,8 +231,6 @@ function fetchPlayerCountAndList(){
       document.getElementById('player-list').innerHTML = '<p style="color:red;">Error loading</p>';
     });
 }
-fetchPlayerCountAndList();
-setInterval(fetchPlayerCountAndList, 15000);
 
 // Copy IP
 document.getElementById('ip-button').addEventListener('click', () => {
