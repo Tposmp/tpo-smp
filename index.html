@@ -44,7 +44,8 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 .gray-button { background: #555; border: 3px solid #444; color: #ccc; }
 .gray-button:hover { background: #666; color: #fff; }
 .mc-gold { color: #FFD700; }
-.mc-darkred { color: #AA0000; } /* &4 color for SMP and TPO */
+.mc-darkred { color: #AA0000; }
+.mc-orange { color: #FFAA00; }
 
 /* ---------- Player List Box ---------- */
 #player-list-box {
@@ -77,10 +78,6 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   width: 24px;
   height: 24px;
   border-radius: 3px;
-}
-.player-entry span.tpo-player {
-  color: #AA0000;
-  font-weight: 700;
 }
 @media (max-width: 720px) {
   #player-list-box {
@@ -122,7 +119,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
     <img src="assets/logo.png" alt="TPO SMP Logo" class="main-logo" />
     <button id="ip-button">tposmp.online <span id="ip-subtext">Click to copy</span></button>
     <div class="players-online"><span id="player-count">Loading...</span><p>Playing right now!</p></div>
-    <h2>What <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
+    <h2>What <span class="mc-orange">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
     <div class="offer-cards">
       <div class="offer-card">🌎 Land Claim Survival, protect your builds.</div>
       <div class="offer-card">🐱 Friendly Community, join players who care.</div>
@@ -196,7 +193,7 @@ if(hash) openSection(hash);
 
 // Fetch player count + list
 function fetchPlayerCountAndList(){
-  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
+  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online ')
     .then(res => res.json())
     .then(data => {
       const online = data?.players?.online ?? 0;
@@ -206,32 +203,24 @@ function fetchPlayerCountAndList(){
       const listEl = document.getElementById('player-list');
       let sample = data?.players?.list ?? [];
 
-      // Move TPO to top if online
-      sample.sort((a,b)=>{
-        const nameA = (a.name_clean||a.name_raw||'').toLowerCase();
-        const nameB = (b.name_clean||b.name_raw||'').toLowerCase();
-        if(nameA==='tpo') return -1;
-        if(nameB==='tpo') return 1;
-        return 0;
-      });
+      // Move "tpo" to top if online
+      sample.sort((a,b) => (a.name_clean?.toLowerCase() === 'tpo' ? -1 : 0));
 
       if(sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
       }
 
-      listEl.innerHTML = sample.map(p => {
-        const name = p.name_clean || p.name_raw || 'Unknown';
-        const isTPO = name.toLowerCase() === 'tpo';
-        return `
-          <div class="player-entry">
-            <span class="${isTPO ? 'tpo-player' : ''}">${name}</span>
-            <img src="https://mc-heads.net/avatar/${encodeURIComponent(name)}/32" alt="${name}">
-          </div>
-        `;
-      }).join('');
+      listEl.innerHTML = sample.map(p => `
+        <div class="player-entry">
+          <span style="${p.name_clean?.toLowerCase() === 'tpo' ? 'color:#AA0000;font-weight:700;' : ''}">
+            ${p.name_clean || p.name_raw || 'Unknown'}
+          </span>
+          <img src="https://mc-heads.net/avatar/ ${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
+        </div>
+      `).join('');
     })
-    .catch(()=>{
+    .catch(() => {
       document.getElementById('player-count').textContent = 'Error';
       document.getElementById('player-list').innerHTML = '<p style="color:red;">Error loading</p>';
     });
