@@ -219,19 +219,29 @@ function fetchPlayerCountAndList(){
       document.getElementById('player-count').textContent = `${online}/${max}`;
 
       const listEl = document.getElementById('player-list');
-      const sample = data?.players?.list ?? [];
+      let sample = data?.players?.list ?? [];
+
+      // Move "Tpo" to top if found
+      const tpoPlayer = sample.find(p => p.name_clean?.toLowerCase() === "tpo");
+      if (tpoPlayer) {
+        sample = [tpoPlayer, ...sample.filter(p => p !== tpoPlayer)];
+        tpoPlayer.is_tpo = true;
+      }
 
       if(sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
       }
 
-      listEl.innerHTML = sample.map(p => `
-        <div class="player-entry">
-          <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
-          <span class="${p.is_tpo ? 'mc-darkred' : ''}">${p.name_clean || p.name_raw || 'Unknown'}</span>
-        </div>
-      `).join('');
+      listEl.innerHTML = sample.map(p => {
+        const isTpo = p.name_clean?.toLowerCase() === "tpo";
+        return `
+          <div class="player-entry">
+            <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
+            <span style="color: ${isTpo ? '#AA0000' : ''};">${p.name_clean || p.name_raw || 'Unknown'}</span>
+          </div>
+        `;
+      }).join('');
     })
     .catch(() => {
       document.getElementById('player-count').textContent = 'Error';
