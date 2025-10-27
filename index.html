@@ -8,11 +8,13 @@
 <link rel="icon" type="image/png" href="assets/tpoicon64.png"/>
 <style>
 html, body {
-  background: #1a1a1a;
-  color: #eee;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #333333;
+  color: #fff;
   font-family: 'Press Start 2P', cursive;
   overflow-x: hidden;
-  position: relative;
 }
 .minecraft-background { background-color: #333333; min-height: 100vh; padding-bottom: 50px; }
 .minecraft-nav { background: rgba(0,0,0,0.6); text-align: center; padding: 15px; }
@@ -117,13 +119,12 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
         <li><a href="#vote" class="minecraft-button mc-darkred">🗳️ Vote</a></li>
         <li><a href="#store" class="minecraft-button mc-darkred">🛒 Store</a></li>
         <li><a href="#staff" class="minecraft-button">👥 Staff</a></li>
-        <li><a href="#dynmap" class="minecraft-button green-button">🗺️ Dynmap</a></li>
       </ul>
     </nav>
   </header>
 
   <section id="home" class="active">
-    <img src="assets/logo.png" alt="TPO SMP Logo" class="main-logo" />
+    <img src="assets/TPOHalloween.png" alt="TPO SMP Logo" class="main-logo" />
     <button id="ip-button">tposmp.online <span id="ip-subtext">Click to copy</span></button>
     <div class="players-online"><span id="player-count">Loading...</span><p>Playing right now!</p></div>
     <h2>What <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
@@ -149,34 +150,18 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   </div>
 </section>
 
+
+
+
   <section id="store">
     <h2 class="mc-darkred">Store</h2>
-    <p>Thank you so much to all our donators!</p>
-    <div style="max-width: 1000px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;">
-      <iframe 
-        src="https://tposmp.craftingstore.net/category/512974" 
-        width="100%" 
-        height="1000" 
-        style="border: none; background: rgba(0,0,0,0.3);" 
-        allowfullscreen>
-      </iframe>
-    </div>
+    <p>This is currently under development.</p>
   </section>
 
   <section id="staff">
     <h2 class="mc-darkred">Staff Center</h2>
     <p style="color: #FF5555; font-size: 14px;">Under development</p>
   </section>
-
-  <!--
-  <section id="dynmap">
-    <h2 class="mc-darkred">Server Dynmap</h2>
-    <p>Explore the live world map of TPO SMP below!</p>
-    <div class="dynmap-container">
-      <iframe src="http://tposmp.online:8123/" width="100%" height="800" style="border: none; border-radius: 12px;" allowfullscreen></iframe>
-    </div>
-  </section>
-  -->
 
   <footer>
     <div class="footer-content">
@@ -197,6 +182,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 </div>
 
 <script>
+// Navigation
 function openSection(target) {
   document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
   const section = document.getElementById(target);
@@ -228,6 +214,7 @@ const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
 else openSection('home');
 
+// Fetch player count + list
 function fetchPlayerCountAndList(){
   fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
     .then(res => res.json())
@@ -239,6 +226,7 @@ function fetchPlayerCountAndList(){
       const listEl = document.getElementById('player-list');
       let sample = data?.players?.list ?? [];
 
+      // Move "Tpo" to top if found
       const tpoPlayer = sample.find(p => p.name_clean?.toLowerCase() === "tpo");
       if (tpoPlayer) {
         sample = [tpoPlayer, ...sample.filter(p => p !== tpoPlayer)];
@@ -266,6 +254,7 @@ function fetchPlayerCountAndList(){
     });
 }
 
+// Copy IP
 document.getElementById('ip-button').addEventListener('click', () => {
   navigator.clipboard.writeText('tposmp.online').then(() => {
     const sub = document.getElementById('ip-subtext');
@@ -274,6 +263,7 @@ document.getElementById('ip-button').addEventListener('click', () => {
   });
 });
 
+// Footer hover
 document.querySelectorAll('.social-links .gray-button').forEach(button => {
   button.addEventListener('mouseenter', () => {
     button.textContent = 'Coming Soon';
