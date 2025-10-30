@@ -219,36 +219,39 @@ const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
 else openSection('home');
 
-// Fetch player count + list
-function fetchPlayerCountAndList(){
-  fetch('https://api.mcstatus.io/v2/status/java/tposmp.online')
+// Fetch player count + list using mcapi.us + Crafatar
+function fetchPlayerCountAndList() {
+  fetch('https://mcapi.us/server/status?ip=tposmp.online')
     .then(res => res.json())
     .then(data => {
-      const online = data?.players?.online ?? 0;
+      const online = data?.players?.now ?? 0;
       const max = data?.players?.max ?? 0;
       document.getElementById('player-count').textContent = `${online}/${max}`;
 
       const listEl = document.getElementById('player-list');
-      let sample = data?.players?.list ?? [];
+      const sample = data?.players?.sample ?? [];
 
-      // Move "Tpo" to top if found
-      const tpoPlayer = sample.find(p => p.name_clean?.toLowerCase() === "tpo");
-      if (tpoPlayer) {
-        sample = [tpoPlayer, ...sample.filter(p => p !== tpoPlayer)];
-        tpoPlayer.is_tpo = true;
-      }
-
-      if(sample.length === 0) {
+      if (!sample || sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
       }
 
-      listEl.innerHTML = sample.map(p => {
-        const isTpo = p.name_clean?.toLowerCase() === "tpo";
+      // Move "Tpo" to the top
+      const reordered = sample.sort((a, b) =>
+        a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0
+      );
+
+      listEl.innerHTML = reordered.map(p => {
+        const isTpo = p.name.toLowerCase() === 'tpo';
+        const uuid = p.id?.replace(/-/g, '');
+        const headUrl = uuid
+          ? `https://crafatar.com/avatars/${uuid}?size=32&overlay`
+          : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/32`;
+
         return `
           <div class="player-entry">
-            <img src="https://mc-heads.net/avatar/${encodeURIComponent(p.name_clean || p.name_raw)}/32" alt="${p.name_clean}">
-            <span style="color: ${isTpo ? '#AA0000' : ''};">${p.name_clean || p.name_raw || 'Unknown'}</span>
+            <img src="${headUrl}" alt="${p.name}">
+            <span style="color: ${isTpo ? '#AA0000' : ''};">${p.name}</span>
           </div>
         `;
       }).join('');
