@@ -108,10 +108,6 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   .footer-content p { font-size: 10px; }
   .social-links .minecraft-button { padding: 8px 16px; font-size: 12px; }
 }
-
-/* Dynmap responsive iframe */
-.responsive-iframe-container { max-width: 1000px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden; }
-.responsive-iframe-container iframe { width: 100%; height: 600px; border: none; background: rgba(0,0,0,0.3); }
 </style>
 </head>
 <body>
@@ -122,7 +118,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
         <li><a href="#home" class="minecraft-button active">🏠 Home</a></li>
         <li><a href="#vote" class="minecraft-button mc-darkred">🗳️ Vote</a></li>
         <li><a href="#store" class="minecraft-button mc-darkred">🛒 Store</a></li>
-        <li><a href="#dynmap" class="minecraft-button" id="dynmap-button">🗺️ Dynmap</a></li>
+        <li><a href="#dynmap" class="minecraft-button mc-gold">🗺️ Dynmap</a></li>
         <li><a href="#staff" class="minecraft-button">👥 Staff</a></li>
       </ul>
     </nav>
@@ -157,16 +153,23 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 
   <section id="store">
     <h2 class="mc-darkred">Store</h2>
-    <div class="responsive-iframe-container">
-      <iframe src="https://tposmp.craftingstore.net/category/512974" allowfullscreen></iframe>
+    <div style="max-width: 1000px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;">
+      <iframe 
+        src="https://tposmp.craftingstore.net/category/512974" 
+        width="100%" 
+        height="1000" 
+        style="border: none; background: rgba(0,0,0,0.3);"
+        allowfullscreen>
+      </iframe>
     </div>
   </section>
 
   <section id="dynmap">
     <h2 class="mc-darkred">Dynmap</h2>
-    <div class="responsive-iframe-container">
-      <iframe src="http://172.96.164.44:27242/" allowfullscreen></iframe>
-    </div>
+    <p style="color:#FFD700; font-size:14px;">
+      Click the button to open the Dynmap:
+      <a href="http://172.96.164.44:27242" target="_blank" class="minecraft-button mc-gold">Open Dynmap</a>
+    </p>
   </section>
 
   <section id="staff">
@@ -224,7 +227,6 @@ const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
 else openSection('home');
 
-// Fetch player count + list
 function fetchPlayerCountAndList() {
   fetch('https://mcapi.us/server/status?ip=tposmp.online')
     .then(res => res.json())
@@ -232,25 +234,21 @@ function fetchPlayerCountAndList() {
       const online = data?.players?.now ?? 0;
       const max = data?.players?.max ?? 0;
       document.getElementById('player-count').textContent = `${online}/${max}`;
-
       const listEl = document.getElementById('player-list');
       const sample = data?.players?.sample ?? [];
       if (!sample || sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
       }
-
       const reordered = sample.sort((a, b) =>
         a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0
       );
-
       listEl.innerHTML = reordered.map(p => {
         const isTpo = p.name.toLowerCase() === 'tpo';
         const uuid = p.id?.replace(/-/g, '');
         const headUrl = uuid
           ? `https://crafatar.com/avatars/${uuid}?size=32&overlay`
           : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/32`;
-
         return `
           <div class="player-entry">
             <img src="${headUrl}" alt="${p.name}">
@@ -265,7 +263,6 @@ function fetchPlayerCountAndList() {
     });
 }
 
-// Copy IP
 document.getElementById('ip-button').addEventListener('click', () => {
   navigator.clipboard.writeText('tposmp.online').then(() => {
     const sub = document.getElementById('ip-subtext');
@@ -274,7 +271,6 @@ document.getElementById('ip-button').addEventListener('click', () => {
   });
 });
 
-// Footer hover
 document.querySelectorAll('.social-links .gray-button').forEach(button => {
   button.addEventListener('mouseenter', () => {
     button.textContent = 'Coming Soon';
@@ -284,29 +280,6 @@ document.querySelectorAll('.social-links .gray-button').forEach(button => {
     button.textContent = button.getAttribute('data-original');
     button.style.color = '';
   });
-});
-
-// Dynmap embed fallback
-const dynmapButton = document.getElementById('dynmap-button');
-const dynmapSection = document.getElementById('dynmap');
-
-function checkDynmap() {
-  const iframe = dynmapSection.querySelector('iframe');
-  iframe.onload = () => { /* Loaded successfully */ };
-  iframe.onerror = () => {
-    dynmapSection.innerHTML = `
-      <h2 class="mc-darkred">Dynmap</h2>
-      <p style="color: #FFD700; font-size:14px;">
-        Dynmap cannot be embedded. <br>
-        <a href="http://172.96.164.44:27242/" target="_blank" class="minecraft-button">Open Dynmap</a>
-      </p>
-    `;
-  };
-}
-
-dynmapButton.addEventListener('click', () => {
-  openSection('dynmap');
-  checkDynmap();
 });
 </script>
 </body>
