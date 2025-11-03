@@ -88,14 +88,25 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   transform: scale(1.08);
   box-shadow: 0 0 10px rgba(255,255,255,0.3);
 }
-@media (max-width: 720px) {
-  #player-list-box {
-    position: static;
-    margin: 20px auto;
-    width: 80%;
-  }
+
+/* ---------- Responsive Dynmap + Store iframe ---------- */
+.responsive-iframe-container {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* 16:9 ratio */
+  border: 3px solid #3c8527;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0,0,0,0.3);
 }
-@media (max-width:520px){ .offer-card,.vote-card { width: 90%; } .main-logo { width: 160px; } }
+.responsive-iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
 
 @media (max-width: 720px) {
   .main-logo { width: 160px; margin-bottom: 16px; }
@@ -108,6 +119,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   .footer-content p { font-size: 10px; }
   .social-links .minecraft-button { padding: 8px 16px; font-size: 12px; }
 }
+@media (max-width:520px){ .offer-card,.vote-card { width: 90%; } .main-logo { width: 160px; } }
 </style>
 </head>
 <body>
@@ -118,6 +130,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
         <li><a href="#home" class="minecraft-button active">🏠 Home</a></li>
         <li><a href="#vote" class="minecraft-button mc-darkred">🗳️ Vote</a></li>
         <li><a href="#store" class="minecraft-button mc-darkred">🛒 Store</a></li>
+        <li><a href="#dynmap" class="minecraft-button">🗺️ Dynmap</a></li>
         <li><a href="#staff" class="minecraft-button">👥 Staff</a></li>
       </ul>
     </nav>
@@ -136,28 +149,35 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
     </div>
   </section>
 
-<section id="vote">
-  <h2><span class="mc-darkred">Vote for</span> <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span></h2>
-  <div class="vote-cards">
-    <a href="https://minecraft.buzz/vote/16729" target="_blank" class="vote-card">MinecraftBuzz</a>
-    <a href="https://minecraftservers.org/vote/679213" target="_blank" class="vote-card">MinecraftServers.org</a>
-    <a href="https://minecraft-server-list.com/server/515077/vote/" target="_blank" class="vote-card">Minecraft-Server-List.com</a>
-    <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/vote/" target="_blank" class="vote-card">PlanetMinecraft.com</a>
-    <a href="https://topg.org/minecraft-servers/server-676484#vote" target="_blank" class="vote-card">TopG.org</a>
-    <a href="https://votemc.com/tpo-smp.1471/vote" target="_blank" class="vote-card">VoteMC.com</a>
-    <a href="https://minecraft-serverlist.com/server/3430/vote" target="_blank" class="vote-card">Minecraft-ServerList.com</a>
-    <a href="https://servers-minecraft.net/server-tpo-smp.42074/vote" target="_blank" class="vote-card">Servers-Minecraft.net</a>
-  </div>
-</section>
+  <section id="vote">
+    <h2><span class="mc-darkred">Vote for</span> <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span></h2>
+    <div class="vote-cards">
+      <a href="https://minecraft.buzz/vote/16729" target="_blank" class="vote-card">MinecraftBuzz</a>
+      <a href="https://minecraftservers.org/vote/679213" target="_blank" class="vote-card">MinecraftServers.org</a>
+      <a href="https://minecraft-server-list.com/server/515077/vote/" target="_blank" class="vote-card">Minecraft-Server-List.com</a>
+      <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/vote/" target="_blank" class="vote-card">PlanetMinecraft.com</a>
+      <a href="https://topg.org/minecraft-servers/server-676484#vote" target="_blank" class="vote-card">TopG.org</a>
+      <a href="https://votemc.com/tpo-smp.1471/vote" target="_blank" class="vote-card">VoteMC.com</a>
+      <a href="https://minecraft-serverlist.com/server/3430/vote" target="_blank" class="vote-card">Minecraft-ServerList.com</a>
+      <a href="https://servers-minecraft.net/server-tpo-smp.42074/vote" target="_blank" class="vote-card">Servers-Minecraft.net</a>
+    </div>
+  </section>
 
   <section id="store">
     <h2 class="mc-darkred">Store</h2>
-    <div style="max-width: 1000px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;">
+    <div class="responsive-iframe-container">
       <iframe 
         src="https://tposmp.craftingstore.net/category/512974" 
-        width="100%" 
-        height="1000" 
-        style="border: none; background: rgba(0,0,0,0.3);"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </section>
+
+  <section id="dynmap">
+    <h2 class="mc-darkred">Dynmap</h2>
+    <div class="responsive-iframe-container">
+      <iframe 
+        src="http://172.96.164.44:27242/" 
         allowfullscreen>
       </iframe>
     </div>
@@ -180,7 +200,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   </footer>
 </div>
 
-<!-- Player List Box (shown only on home page) -->
+<!-- Player List Box -->
 <div id="player-list-box" style="display:none;">
   <h3>Online Players</h3>
   <div id="player-list">Loading...</div>
@@ -219,7 +239,7 @@ const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
 else openSection('home');
 
-// Fetch player count + list using mcapi.us + Crafatar
+// Fetch player count + list
 function fetchPlayerCountAndList() {
   fetch('https://mcapi.us/server/status?ip=tposmp.online')
     .then(res => res.json())
@@ -236,7 +256,6 @@ function fetchPlayerCountAndList() {
         return;
       }
 
-      // Move "Tpo" to the top
       const reordered = sample.sort((a, b) =>
         a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0
       );
@@ -285,5 +304,3 @@ document.querySelectorAll('.social-links .gray-button').forEach(button => {
 </script>
 </body>
 </html>
-
-
