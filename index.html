@@ -46,7 +46,7 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
 .mc-gold { color: #FFA500; } 
 .mc-darkred { color: #AA0000; }
 
-/* ---------- Player List Box ---------- */
+/* Player List Box */
 #player-list-box {
   position: fixed;
   top: 120px;
@@ -115,11 +115,14 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   <header>
     <nav class="minecraft-nav">
       <ul class="nav-buttons">
+
         <li><a href="#home" class="minecraft-button active">🏠 Home</a></li>
         <li><a href="#vote" class="minecraft-button mc-darkred">🗳️ Vote</a></li>
         <li><a href="#store" class="minecraft-button mc-darkred">🛒 Store</a></li>
         <li><a href="#dynmap" class="minecraft-button mc-gold">🗺️ Dynmap</a></li>
+        <li><a href="#unbans" class="minecraft-button mc-gold">🚫 Unbans</a></li>
         <li><a href="#staff" class="minecraft-button">👥 Staff</a></li>
+
       </ul>
     </nav>
   </header>
@@ -172,10 +175,20 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
     </p>
   </section>
 
-  <section id="staff">
-    <h2 class="mc-darkred">Staff Center</h2>
-    <p style="color: #FF5555; font-size: 14px;">Under development</p>
-  </section>
+  <!-- NEW UNBANS SECTION -->
+<section id="unbans">
+  <h2 class="mc-darkred">Unban Appeals</h2>
+  <div 
+    style="max-width: 900px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;"
+  >
+    <iframe 
+      src="https://docs.google.com/forms/d/e/1FAIpQLScqZRatsdF9R5bsKW6n-GTem4maJalnAvAq6Aprye4pSsBQdA/viewform?embedded=true"
+      width="100%" 
+      height="1500" 
+      style="border:none; background: rgba(0,0,0,0.3);"
+    ></iframe>
+  </div>
+</section>
 
   <footer>
     <div class="footer-content">
@@ -227,84 +240,37 @@ const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
 else openSection('home');
 
-/*
-  Robust fetch that uses api.mcsrvstat.us and handles:
-   - players.list as array of names (strings)
-   - players.list as array of objects { name, uuid }
-   - fallback to mc-heads.net when UUID isn't available
-*/
 function fetchPlayerCountAndList() {
-  fetch('https://api.mcsrvstat.us/2/tposmp.online')
-    .then(res => {
-      if (!res.ok) throw new Error('network');
-      return res.json();
-    })
+  fetch('https://mcapi.us/server/status?ip=tposmp.online')
+    .then(res => res.json())
     .then(data => {
-      // api.mcsrvstat.us sometimes puts players at data.players
-      const players = data?.players ?? {};
-      const online = players?.online ?? players?.now ?? 0;
-      const max = players?.max ?? 0;
+      const online = data?.players?.now ?? 0;
+      const max = data?.players?.max ?? 0;
       document.getElementById('player-count').textContent = `${online}/${max}`;
-
       const listEl = document.getElementById('player-list');
-
-      // players.list can be array of strings (names) or objects
-      let sample = players?.list ?? [];
-
-      // If sample is object with keys instead of array, try other common fields
-      if (!Array.isArray(sample) && typeof sample === 'object') {
-        // try mcapi style sample
-        sample = Object.values(sample);
-      }
-
+      const sample = data?.players?.sample ?? [];
       if (!sample || sample.length === 0) {
         listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
         return;
       }
-
-      // Normalize entries to objects with { name, uuid? }
-      const normalized = sample.map(item => {
-        if (!item) return null;
-        if (typeof item === 'string') return { name: item, uuid: null };
-        if (typeof item === 'object') {
-          // common field names: name, id, uuid
-          const name = item.name ?? item.username ?? item.raw ?? '';
-          const uuid = item.uuid ?? item.id ?? item.user ?? null;
-          return { name, uuid };
-        }
-        return null;
-      }).filter(Boolean);
-
-      // Move Tpo to top if present
-      normalized.sort((a, b) => {
-        const an = (a.name || '').toLowerCase();
-        const bn = (b.name || '').toLowerCase();
-        if (an === 'tpo') return -1;
-        if (bn === 'tpo') return 1;
-        return 0;
-      });
-
-      listEl.innerHTML = normalized.map(p => {
-        const name = p.name || 'Unknown';
-        const maybeUuid = (p.uuid || '').replace(/-/g, '') || null;
-
-        // Use Crafatar when we have a UUID, otherwise use mc-heads.net by name
-        const headUrl = maybeUuid
-          ? `https://crafatar.com/avatars/${maybeUuid}?size=32&overlay`
-          : `https://mc-heads.net/avatar/${encodeURIComponent(name)}/32`;
-
-        const color = name.toLowerCase() === 'tpo' ? '#AA0000' : '';
-
+      const reordered = sample.sort((a, b) =>
+        a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0
+      );
+      listEl.innerHTML = reordered.map(p => {
+        const isTpo = p.name.toLowerCase() === 'tpo';
+        const uuid = p.id?.replace(/-/g, '');
+        const headUrl = uuid
+          ? `https://mc-heads.net/avatar/${uuid}/32`
+          : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/32`;
         return `
           <div class="player-entry">
-            <img src="${headUrl}" alt="${name}" loading="lazy" onerror="this.onerror=null;this.src='https://mc-heads.net/avatar/${encodeURIComponent(name)}/32'">
-            <span style="color: ${color};">${name}</span>
+            <img src="${headUrl}" alt="${p.name}">
+            <span style="color: ${isTpo ? '#AA0000' : ''};">${p.name}</span>
           </div>
         `;
       }).join('');
     })
-    .catch(err => {
-      console.warn('Player list fetch error', err);
+    .catch(() => {
       document.getElementById('player-count').textContent = 'Error';
       document.getElementById('player-list').innerHTML = '<p style="color:red;">Error loading</p>';
     });
@@ -328,10 +294,6 @@ document.querySelectorAll('.social-links .gray-button').forEach(button => {
     button.style.color = '';
   });
 });
-
-// initial + polling
-fetchPlayerCountAndList();
-setInterval(fetchPlayerCountAndList, 15000);
 </script>
 </body>
 </html>
