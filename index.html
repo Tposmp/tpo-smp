@@ -140,12 +140,14 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
   <header>
     <nav class="minecraft-nav">
       <ul class="nav-buttons">
+
         <li><a href="#home" class="minecraft-button active">🏠 Home</a></li>
         <li><a href="#vote" class="minecraft-button mc-darkred">🗳️ Vote</a></li>
         <li><a href="#store" class="minecraft-button mc-darkred">🛒 Store</a></li>
         <li><a href="#dynmap" class="minecraft-button mc-gold">🗺️ Dynmap</a></li>
         <li><a href="#unbans" class="minecraft-button mc-gold">🚫 Unbans</a></li>
-        <li><a href="#apply" class="minecraft-button">👥 Apply</a></li>
+        <li><a href="#staff" class="minecraft-button">👥 Staff</a></li>
+
       </ul>
     </nav>
   </header>
@@ -198,30 +200,20 @@ footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; ma
     </p>
   </section>
 
-  <section id="unbans">
-    <h2 class="mc-darkred">Unban Appeals</h2>
-    <div style="max-width: 900px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;">
-      <iframe 
-        src="https://docs.google.com/forms/d/e/1FAIpQLScqZRatsdF9R5bsKW6n-GTem4maJalnAvAq6Aprye4pSsBQdA/viewform?embedded=true"
-        width="100%" 
-        height="1500" 
-        style="border:none; background: rgba(0,0,0,0.3);"
-      ></iframe>
-    </div>
-  </section>
-
-  <!-- NEW APPLY SECTION -->
-  <section id="apply">
-    <h2 class="mc-darkred">Staff Application</h2>
-    <div style="max-width: 900px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;">
-      <iframe 
-        src="https://docs.google.com/forms/d/e/1FAIpQLSc-jusYDOTQ6DRIVJ5xBtNZe5wHRRacF0Dg0vphVmI0xiaJpQ/viewform?embedded=true"
-        width="100%" 
-        height="2300" 
-        style="border:none; background: rgba(0,0,0,0.3);"
-      ></iframe>
-    </div>
-  </section>
+  <!-- NEW UNBANS SECTION -->
+<section id="unbans">
+  <h2 class="mc-darkred">Unban Appeals</h2>
+  <div 
+    style="max-width: 900px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;"
+  >
+    <iframe 
+      src="https://docs.google.com/forms/d/e/1FAIpQLScqZRatsdF9R5bsKW6n-GTem4maJalnAvAq6Aprye4pSsBQdA/viewform?embedded=true"
+      width="100%" 
+      height="1500" 
+      style="border:none; background: rgba(0,0,0,0.3);"
+    ></iframe>
+  </div>
+</section>
 
   <footer>
     <div class="footer-content">
@@ -271,27 +263,62 @@ document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
 
 const hash = window.location.hash.substring(1);
 if(hash) openSection(hash);
+else openSection('home');
 
-// Copy IP
-document.getElementById('ip-button').addEventListener('click', () => {
-  navigator.clipboard.writeText('tposmp.online');
-  document.getElementById('ip-subtext').innerText = 'Copied!';
-  setTimeout(()=>{document.getElementById('ip-subtext').innerText='Click to copy';},1500);
-});
-
-// Player List (Example, replace with your server API)
-function fetchPlayerCountAndList(){
-  const playerCountSpan = document.getElementById('player-count');
-  const playerListDiv = document.getElementById('player-list');
-  // Replace this with actual API
-  const players = ["Player1","Player2","Player3"];
-  playerCountSpan.innerText = players.length;
-  playerListDiv.innerHTML = players.map(p=>`<div class="player-entry"><img src="https://mc-heads.net/avatar/${p}/24" alt="${p}"/><span>${p}</span></div>`).join('');
+function fetchPlayerCountAndList() {
+  fetch('https://mcapi.us/server/status?ip=tposmp.online')
+    .then(res => res.json())
+    .then(data => {
+      const online = data?.players?.now ?? 0;
+      const max = data?.players?.max ?? 0;
+      document.getElementById('player-count').textContent = `${online}/${max}`;
+      const listEl = document.getElementById('player-list');
+      const sample = data?.players?.sample ?? [];
+      if (!sample || sample.length === 0) {
+        listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
+        return;
+      }
+      const reordered = sample.sort((a, b) =>
+        a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0
+      );
+      listEl.innerHTML = reordered.map(p => {
+        const isTpo = p.name.toLowerCase() === 'tpo';
+        const uuid = p.id?.replace(/-/g, '');
+        const headUrl = uuid
+          ? `https://mc-heads.net/avatar/${uuid}/32`
+          : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/32`;
+        return `
+          <div class="player-entry">
+            <img src="${headUrl}" alt="${p.name}">
+            <span style="color: ${isTpo ? '#AA0000' : ''};">${p.name}</span>
+          </div>
+        `;
+      }).join('');
+    })
+    .catch(() => {
+      document.getElementById('player-count').textContent = 'Error';
+      document.getElementById('player-list').innerHTML = '<p style="color:red;">Error loading</p>';
+    });
 }
 
-// Initial fetch if home
-if(window.location.hash===''||window.location.hash==='#home') fetchPlayerCountAndList();
-</script>
+document.getElementById('ip-button').addEventListener('click', () => {
+  navigator.clipboard.writeText('tposmp.online').then(() => {
+    const sub = document.getElementById('ip-subtext');
+    sub.textContent = 'Copied!';
+    setTimeout(()=> sub.textContent = 'Click to copy', 1500);
+  });
+});
 
+document.querySelectorAll('.social-links .gray-button').forEach(button => {
+  button.addEventListener('mouseenter', () => {
+    button.textContent = 'Coming Soon';
+    button.style.color = 'yellow';
+  });
+  button.addEventListener('mouseleave', () => {
+    button.textContent = button.getAttribute('data-original');
+    button.style.color = '';
+  });
+});
+</script>
 </body>
 </html>
