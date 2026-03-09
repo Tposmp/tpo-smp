@@ -4,24 +4,32 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="TPO SMP - Join our Minecraft server for land claim survival, friendly community, optional PvP areas, and seasonal events."/>
-<title>TPO SMP - Minecraft Server</title>
+<meta name="keywords" content="Minecraft, SMP, TPO SMP, survival, factions, pvp, land claim"/>
+<title>TPO SMP — Minecraft Server</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="assets/tpoicon264.png"/>
+
 <style>
+/* ═══════════════════════════════════════════
+   ROOT & RESET
+═══════════════════════════════════════════ */
 :root {
-  --green: #4ade80;
-  --green-dark: #16a34a;
-  --green-glow: rgba(74,222,128,0.35);
-  --gold: #fbbf24;
-  --gold-glow: rgba(251,191,36,0.3);
-  --red: #ef4444;
-  --bg: #0a0f0a;
-  --bg2: #0d140d;
-  --bg3: #111a11;
-  --surface: rgba(255,255,255,0.04);
-  --border: rgba(74,222,128,0.18);
-  --text: #e8f5e9;
-  --muted: rgba(232,245,233,0.5);
+  --green:   #00ff88;
+  --green2:  #00cc66;
+  --green3:  #003322;
+  --gold:    #ffcc00;
+  --red:     #ff2244;
+  --dark:    #060a06;
+  --dark2:   #0a100a;
+  --dark3:   #0f180f;
+  --border:  rgba(0,255,136,0.2);
+  --glow:    0 0 20px rgba(0,255,136,0.6);
+  --glow2:   0 0 40px rgba(0,255,136,0.3);
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body:    'Rajdhani', sans-serif;
+  --font-mono:    'Share Tech Mono', monospace;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,64 +37,113 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
+  background: var(--dark);
+  color: #c8ffc8;
+  font-family: var(--font-body);
   min-height: 100vh;
   overflow-x: hidden;
+  cursor: none;
 }
 
-/* ─── NOISE OVERLAY ─── */
+/* ─── CUSTOM CURSOR ─── */
+#cursor {
+  width: 14px; height: 14px;
+  border: 2px solid var(--green);
+  border-radius: 0;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%,-50%);
+  transition: transform 0.08s, width 0.15s, height 0.15s, background 0.15s;
+  mix-blend-mode: difference;
+}
+#cursor-trail {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 0;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%,-50%);
+  opacity: 0.6;
+  transition: left 0.12s ease, top 0.12s ease;
+}
+body:hover #cursor { }
+
+/* ─── CANVAS PARTICLES ─── */
+#particle-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ─── SCANLINES ─── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.07) 2px,
+    rgba(0,0,0,0.07) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── GRID BACKGROUND ─── */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image:
+    linear-gradient(rgba(0,255,136,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,255,136,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
   pointer-events: none;
   z-index: 0;
+  animation: gridShift 20s linear infinite;
+}
+@keyframes gridShift {
+  from { background-position: 0 0; }
+  to   { background-position: 40px 40px; }
 }
 
-/* ─── AMBIENT GLOW BLOBS ─── */
-.blob {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(120px);
-  pointer-events: none;
-  z-index: 0;
-  animation: blobFloat 12s ease-in-out infinite;
-}
-.blob-1 { width: 500px; height: 500px; background: rgba(22,163,74,0.12); top: -100px; left: -100px; animation-delay: 0s; }
-.blob-2 { width: 400px; height: 400px; background: rgba(251,191,36,0.07); top: 40%; right: -80px; animation-delay: 4s; }
-.blob-3 { width: 350px; height: 350px; background: rgba(74,222,128,0.08); bottom: 10%; left: 20%; animation-delay: 7s; }
-
-@keyframes blobFloat {
-  0%, 100% { transform: translate(0,0) scale(1); }
-  33% { transform: translate(20px,-20px) scale(1.03); }
-  66% { transform: translate(-15px,15px) scale(0.97); }
-}
-
-/* ─── NAV ─── */
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 100;
-  padding: 0 40px;
-  height: 72px;
+  z-index: 500;
+  height: 68px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(10,15,10,0.85);
-  backdrop-filter: blur(20px);
+  padding: 0 40px;
+  background: rgba(6,10,6,0.92);
   border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(16px);
 }
 
 .nav-logo {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: 20px;
-  font-weight: 900;
+  font-family: var(--font-display);
+  font-size: 32px;
+  letter-spacing: 4px;
   color: var(--green);
-  text-shadow: 0 0 20px var(--green-glow);
-  letter-spacing: 2px;
+  text-shadow: var(--glow);
+  position: relative;
+}
+.nav-logo::after {
+  content: 'SMP';
+  position: absolute;
+  top: 0; left: calc(100% + 6px);
+  color: var(--gold);
+  font-size: 32px;
+  text-shadow: 0 0 20px rgba(255,204,0,0.7);
 }
 
 .nav-links {
@@ -99,298 +156,421 @@ nav {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  text-decoration: none;
-  color: var(--muted);
-  transition: all 0.2s;
-  cursor: pointer;
-  border: 1px solid transparent;
-  font-family: 'Inter', sans-serif;
+  padding: 8px 18px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 2px;
   text-transform: uppercase;
+  text-decoration: none;
+  color: rgba(200,255,200,0.55);
+  border: 1px solid transparent;
+  border-radius: 3px;
+  transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+.nav-links a::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--green);
+  transform: scaleX(0);
+  transition: transform 0.2s;
+  box-shadow: var(--glow);
 }
 .nav-links a:hover, .nav-links a.active {
   color: var(--green);
-  background: rgba(74,222,128,0.08);
+  background: rgba(0,255,136,0.05);
   border-color: var(--border);
 }
+.nav-links a:hover::before, .nav-links a.active::before { transform: scaleX(1); }
 
-/* ─── SECTIONS ─── */
-section { display: none; min-height: 100vh; padding: 120px 40px 80px; position: relative; z-index: 1; }
+/* ═══════════════════════════════════════════
+   SECTIONS
+═══════════════════════════════════════════ */
+section {
+  display: none;
+  min-height: 100vh;
+  padding: 100px 40px 80px;
+  position: relative;
+  z-index: 2;
+}
 section.active { display: block; }
 
-/* ─── HOME HERO ─── */
+/* ═══════════════════════════════════════════
+   HOME
+═══════════════════════════════════════════ */
 #home {
   display: none;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 140px;
+  padding-top: 120px;
+  min-height: 100vh;
 }
 #home.active { display: flex; }
 
-.hero-eyebrow {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 16px;
-  border-radius: 100px;
-  border: 1px solid var(--border);
-  background: rgba(74,222,128,0.06);
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 28px;
-  animation: fadeUp 0.8s ease both;
+/* ─── HERO LOGO ─── */
+.hero-logo-wrap {
+  position: relative;
+  margin-bottom: 32px;
+  animation: heroIn 1s cubic-bezier(0.16,1,0.3,1) both;
 }
-
-.hero-dot {
-  width: 6px; height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-  box-shadow: 0 0 8px var(--green);
-  animation: pulse 2s ease infinite;
+.hero-logo-wrap::before, .hero-logo-wrap::after {
+  content: '';
+  position: absolute;
+  inset: -12px;
+  border: 1px solid var(--green);
+  border-radius: 6px;
+  animation: cornerSpin 8s linear infinite;
+  opacity: 0.4;
 }
-
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+.hero-logo-wrap::after {
+  inset: -20px;
+  border-color: var(--gold);
+  animation-duration: 12s;
+  animation-direction: reverse;
+  opacity: 0.2;
+}
+@keyframes cornerSpin {
+  0%   { clip-path: polygon(0 0, 20px 0, 0 20px); }
+  25%  { clip-path: polygon(100% 0, 100% 20px, calc(100% - 20px) 0); }
+  50%  { clip-path: polygon(100% 100%, calc(100% - 20px) 100%, 100% calc(100% - 20px)); }
+  75%  { clip-path: polygon(0 100%, 20px 100%, 0 calc(100% - 20px)); }
+  100% { clip-path: polygon(0 0, 20px 0, 0 20px); }
+}
 
 .hero-logo {
-  width: 140px;
-  height: 140px;
-  border-radius: 24px;
-  border: 2px solid var(--border);
-  box-shadow: 0 0 60px var(--green-glow), 0 0 120px rgba(74,222,128,0.1);
-  animation: fadeUp 0.8s 0.1s ease both, logoGlow 4s ease infinite;
-  object-fit: cover;
+  width: 150px; height: 150px;
+  border-radius: 8px;
+  border: 2px solid var(--green);
+  display: block;
+  box-shadow: var(--glow), 0 0 80px rgba(0,255,136,0.15), inset 0 0 30px rgba(0,255,136,0.05);
+  animation: logoPulse 3s ease infinite;
+}
+@keyframes logoPulse {
+  0%,100% { box-shadow: var(--glow), 0 0 80px rgba(0,255,136,0.15); }
+  50%      { box-shadow: 0 0 30px rgba(0,255,136,0.9), 0 0 100px rgba(0,255,136,0.25); }
 }
 
-@keyframes logoGlow {
-  0%,100% { box-shadow: 0 0 60px var(--green-glow), 0 0 120px rgba(74,222,128,0.1); }
-  50% { box-shadow: 0 0 80px rgba(74,222,128,0.5), 0 0 150px rgba(74,222,128,0.15); }
-}
-
+/* ─── HERO TITLE ─── */
 .hero-title {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(48px, 8vw, 100px);
-  font-weight: 900;
-  line-height: 1;
-  margin: 28px 0 12px;
-  animation: fadeUp 0.8s 0.2s ease both;
+  font-family: var(--font-display);
+  font-size: clamp(80px, 14vw, 180px);
+  line-height: 0.85;
+  letter-spacing: 8px;
+  margin-bottom: 12px;
+  animation: heroIn 1s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+  position: relative;
 }
-.hero-title .t-green { color: var(--green); text-shadow: 0 0 40px var(--green-glow); }
-.hero-title .t-gold { color: var(--gold); text-shadow: 0 0 40px var(--gold-glow); }
+.hero-title .t1 {
+  display: block;
+  color: var(--green);
+  text-shadow: var(--glow), 0 0 80px rgba(0,255,136,0.3);
+  animation: glitchText 8s infinite;
+}
+.hero-title .t2 {
+  display: block;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(255,204,0,0.7), 0 0 60px rgba(255,204,0,0.2);
+  font-size: 0.45em;
+  letter-spacing: 20px;
+  padding-left: 8px;
+}
 
-.hero-sub {
-  font-family: 'Cinzel', serif;
-  font-size: 15px;
-  letter-spacing: 6px;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 48px;
-  animation: fadeUp 0.8s 0.3s ease both;
+@keyframes glitchText {
+  0%,90%,100% { transform: none; }
+  91% { transform: skewX(-4deg) translateX(-3px); filter: hue-rotate(90deg); }
+  92% { transform: skewX(2deg) translateX(3px); }
+  93% { transform: none; filter: none; }
+  96% { transform: skewX(-2deg); }
+  97% { transform: none; }
+}
+
+/* ─── IP BUTTON ─── */
+.ip-section {
+  margin: 32px 0 16px;
+  animation: heroIn 1s 0.3s cubic-bezier(0.16,1,0.3,1) both;
 }
 
 .ip-btn {
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  padding: 16px 40px;
-  background: linear-gradient(135deg, var(--green-dark), #15803d);
-  border: 1px solid var(--green);
-  border-radius: 12px;
-  font-family: 'Cinzel', serif;
-  font-size: 18px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  color: #fff;
-  cursor: pointer;
+  padding: 18px 52px;
+  background: transparent;
+  border: 2px solid var(--green);
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: 22px;
+  letter-spacing: 3px;
+  cursor: none;
   transition: all 0.3s;
-  box-shadow: 0 0 30px rgba(74,222,128,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
-  animation: fadeUp 0.8s 0.4s ease both;
+  overflow: hidden;
+  clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+}
+.ip-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--green);
+  transform: translateX(-101%);
+  transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+  z-index: -1;
 }
 .ip-btn:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 40px rgba(74,222,128,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+  color: var(--dark);
+  text-shadow: none;
+  box-shadow: none;
+  border-color: var(--green);
 }
-.ip-sub { font-family: 'Inter', sans-serif; font-size: 11px; opacity: 0.7; letter-spacing: 2px; text-transform: uppercase; }
+.ip-btn:hover::before { transform: translateX(0); }
+.ip-btn-sub {
+  font-family: var(--font-body);
+  font-size: 11px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
 
+/* ─── PLAYER COUNT ─── */
 .player-count {
-  margin-top: 24px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  animation: fadeUp 0.8s 0.5s ease both;
+  animation: heroIn 1s 0.4s cubic-bezier(0.16,1,0.3,1) both;
+  margin-bottom: 60px;
 }
 .player-count-num {
-  font-family: 'Cinzel', serif;
-  font-size: 28px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 48px;
   color: var(--gold);
-  text-shadow: 0 0 20px var(--gold-glow);
+  text-shadow: 0 0 20px rgba(255,204,0,0.6);
+  display: inline-block;
+  animation: countPulse 2s ease infinite;
 }
-.player-count-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
-
-/* FEATURES GRID */
-.features-section {
-  margin-top: 80px;
-  width: 100%;
-  max-width: 1100px;
-  animation: fadeUp 0.8s 0.6s ease both;
+@keyframes countPulse {
+  0%,100% { text-shadow: 0 0 20px rgba(255,204,0,0.6); }
+  50%      { text-shadow: 0 0 40px rgba(255,204,0,1), 0 0 80px rgba(255,204,0,0.3); }
 }
-
-.features-title {
-  font-family: 'Cinzel', serif;
+.player-count-label {
   font-size: 13px;
   letter-spacing: 4px;
   text-transform: uppercase;
-  color: var(--muted);
-  text-align: center;
-  margin-bottom: 32px;
+  color: rgba(200,255,200,0.4);
+  display: block;
+  margin-top: 4px;
+}
+
+/* ─── FEATURES ─── */
+.features-header {
+  font-family: var(--font-display);
+  font-size: 13px;
+  letter-spacing: 8px;
+  text-transform: uppercase;
+  color: rgba(200,255,200,0.35);
+  margin-bottom: 24px;
+  animation: heroIn 1s 0.5s both;
 }
 
 .features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+  width: 100%;
+  max-width: 1100px;
+  animation: heroIn 1s 0.6s both;
 }
 
 .feat-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 20px 24px;
+  background: rgba(0,255,136,0.03);
+  border: 1px solid rgba(0,255,136,0.12);
+  border-left: 3px solid var(--green);
+  padding: 16px 20px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 14px;
-  transition: all 0.3s;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.25s;
   position: relative;
   overflow: hidden;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
 }
-.feat-card::before {
+.feat-card::after {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(74,222,128,0.04), transparent);
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, rgba(0,255,136,0.08), transparent);
   opacity: 0;
-  transition: opacity 0.3s;
+  transition: opacity 0.25s;
 }
-.feat-card:hover { border-color: rgba(74,222,128,0.4); transform: translateY(-2px); }
-.feat-card:hover::before { opacity: 1; }
+.feat-card:hover {
+  border-left-color: var(--gold);
+  border-color: rgba(255,204,0,0.25);
+  transform: translateX(4px);
+}
+.feat-card:hover::after { opacity: 1; }
+.feat-icon { font-size: 20px; flex-shrink: 0; }
+.feat-text { color: rgba(200,255,200,0.85); }
+.feat-text strong { color: var(--green); }
 
-.feat-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
-.feat-text { font-size: 13px; line-height: 1.6; color: var(--text); }
-.feat-text strong { color: var(--green); font-weight: 500; }
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes heroIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
-/* ─── VOTE ─── */
-#vote { max-width: 900px; margin: 0 auto; }
-
+/* ═══════════════════════════════════════════
+   PAGE HEADERS (vote/store/etc)
+═══════════════════════════════════════════ */
 .page-header {
   text-align: center;
   margin-bottom: 56px;
 }
 .page-header h2 {
-  font-family: 'Cinzel Decorative', serif;
-  font-size: clamp(28px, 4vw, 48px);
-  font-weight: 900;
+  font-family: var(--font-display);
+  font-size: clamp(40px, 6vw, 72px);
   color: var(--green);
-  text-shadow: 0 0 30px var(--green-glow);
+  letter-spacing: 6px;
+  text-shadow: var(--glow);
   margin-bottom: 12px;
 }
 .page-header p {
-  color: var(--muted);
-  font-size: 14px;
-  letter-spacing: 1px;
+  font-size: 15px;
+  letter-spacing: 2px;
+  color: rgba(200,255,200,0.45);
+  text-transform: uppercase;
 }
+.divider {
+  width: 80px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  margin: 16px auto;
+  box-shadow: var(--glow);
+}
+
+/* ═══════════════════════════════════════════
+   VOTE
+═══════════════════════════════════════════ */
+#vote { max-width: 1000px; margin: 0 auto; }
 
 .vote-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
 }
 
 .vote-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 24px;
+  background: rgba(0,255,136,0.03);
+  border: 1px solid rgba(0,255,136,0.15);
+  padding: 28px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   text-decoration: none;
   transition: all 0.3s;
   position: relative;
   overflow: hidden;
+  clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
 }
-.vote-card::after {
+.vote-card::before {
   content: '';
   position: absolute;
   bottom: 0; left: 0; right: 0;
   height: 2px;
   background: linear-gradient(90deg, transparent, var(--green), transparent);
-  opacity: 0;
-  transition: opacity 0.3s;
+  transform: scaleX(0);
+  transition: transform 0.3s;
+  box-shadow: var(--glow);
 }
-.vote-card:hover { transform: translateY(-6px); border-color: var(--green); box-shadow: 0 12px 40px rgba(74,222,128,0.15); }
-.vote-card:hover::after { opacity: 1; }
-.vote-card-icon { font-size: 28px; }
-.vote-card-name { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--text); text-align: center; }
-.vote-card-cta {
+.vote-card:hover {
+  border-color: var(--green);
+  background: rgba(0,255,136,0.07);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.4), 0 0 20px rgba(0,255,136,0.1);
+}
+.vote-card:hover::before { transform: scaleX(1); }
+.vote-icon { font-size: 30px; }
+.vote-name {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(200,255,200,0.85);
+  text-align: center;
+}
+.vote-cta {
+  font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 2px;
-  text-transform: uppercase;
   color: var(--green);
-  padding: 6px 14px;
-  border: 1px solid var(--border);
-  border-radius: 100px;
+  text-transform: uppercase;
   margin-top: 4px;
 }
 
-/* ─── STORE ─── */
-#store { max-width: 1100px; margin: 0 auto; }
-
+/* ═══════════════════════════════════════════
+   IFRAME SECTIONS
+═══════════════════════════════════════════ */
 .iframe-wrap {
   border: 1px solid var(--border);
-  border-radius: 16px;
+  position: relative;
   overflow: hidden;
-  background: var(--bg2);
-  box-shadow: 0 0 60px rgba(0,0,0,0.5);
 }
+.iframe-wrap::before, .iframe-wrap::after {
+  content: '';
+  position: absolute;
+  width: 16px; height: 16px;
+  border-color: var(--green);
+  border-style: solid;
+  z-index: 2;
+}
+.iframe-wrap::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+.iframe-wrap::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
-/* ─── UNBANS / APPLY ─── */
-#unbans, #apply { max-width: 900px; margin: 0 auto; }
-
-/* ─── ONLINE PLAYERS ─── */
+/* ═══════════════════════════════════════════
+   ONLINE PLAYERS BOX
+═══════════════════════════════════════════ */
 #player-list-box {
   position: fixed;
-  top: 88px;
-  right: 24px;
-  width: 210px;
-  background: rgba(10,15,10,0.9);
+  top: 84px;
+  right: 20px;
+  width: 200px;
+  background: rgba(6,10,6,0.95);
   border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 16px;
+  border-radius: 0;
+  padding: 14px;
   z-index: 50;
   backdrop-filter: blur(20px);
-  max-height: 420px;
+  max-height: 400px;
   overflow-y: auto;
+  clip-path: polygon(8px 0%, 100% 0%, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0% 100%, 0% 8px);
 }
-#player-list-box::-webkit-scrollbar { width: 4px; }
+#player-list-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  box-shadow: var(--glow);
+}
+#player-list-box::-webkit-scrollbar { width: 3px; }
 #player-list-box::-webkit-scrollbar-track { background: transparent; }
-#player-list-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+#player-list-box::-webkit-scrollbar-thumb { background: var(--green); }
 
 #player-list-box h3 {
-  font-family: 'Cinzel', serif;
-  font-size: 11px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  color: var(--gold);
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 4px;
+  color: var(--green);
+  text-shadow: var(--glow);
   text-align: center;
   margin-bottom: 12px;
   padding-bottom: 10px;
@@ -402,28 +582,49 @@ section.active { display: block; }
   align-items: center;
   gap: 8px;
   padding: 5px 0;
-  transition: transform 0.2s;
+  transition: all 0.2s;
+  border-left: 2px solid transparent;
+  padding-left: 6px;
 }
-.player-entry:hover { transform: translateX(3px); }
+.player-entry:hover {
+  border-left-color: var(--green);
+  padding-left: 10px;
+}
 .player-entry img {
-  width: 22px; height: 22px;
-  border-radius: 4px;
+  width: 20px; height: 20px;
   border: 1px solid var(--border);
+  image-rendering: pixelated;
 }
-.player-entry span { font-size: 11px; color: var(--text); }
-.player-entry.is-tpo span { color: var(--red); font-weight: 600; }
+.player-entry span { font-family: var(--font-mono); font-size: 11px; color: rgba(200,255,200,0.8); }
+.player-entry.is-tpo span { color: var(--red); }
 
-/* ─── FOOTER ─── */
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
 footer {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   border-top: 1px solid var(--border);
   padding: 48px 40px;
   text-align: center;
-  background: rgba(10,15,10,0.7);
+  background: rgba(6,10,6,0.9);
+}
+footer::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--green), var(--gold), var(--green), transparent);
+  box-shadow: 0 0 10px rgba(0,255,136,0.4);
 }
 
-footer p { font-size: 12px; color: var(--muted); margin-bottom: 24px; letter-spacing: 1px; }
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: rgba(200,255,200,0.3);
+  margin-bottom: 24px;
+  letter-spacing: 2px;
+}
 
 .social-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
@@ -431,235 +632,368 @@ footer p { font-size: 12px; color: var(--muted); margin-bottom: 24px; letter-spa
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 22px;
-  border-radius: 10px;
+  padding: 10px 24px;
+  font-family: var(--font-body);
   font-size: 13px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
   text-decoration: none;
-  transition: all 0.2s;
   border: 1px solid;
-  cursor: pointer;
+  cursor: none;
+  transition: all 0.25s;
+  clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
 }
-.soc-btn.discord { background: rgba(88,101,242,0.15); border-color: rgba(88,101,242,0.4); color: #7289da; }
-.soc-btn.discord:hover { background: rgba(88,101,242,0.25); transform: translateY(-2px); }
-.soc-btn.gray { background: var(--surface); border-color: var(--border); color: var(--muted); }
-.soc-btn.gray:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
-
-/* ─── ANIMATIONS ─── */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+.soc-btn.discord {
+  background: rgba(88,101,242,0.1);
+  border-color: rgba(88,101,242,0.4);
+  color: #7289da;
+}
+.soc-btn.discord:hover {
+  background: rgba(88,101,242,0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(88,101,242,0.2);
+}
+.soc-btn.gray {
+  background: transparent;
+  border-color: rgba(200,255,200,0.1);
+  color: rgba(200,255,200,0.3);
+}
+.soc-btn.gray:hover {
+  color: var(--gold);
+  border-color: rgba(255,204,0,0.3);
+  background: rgba(255,204,0,0.05);
 }
 
-/* ─── MOBILE ─── */
+/* ═══════════════════════════════════════════
+   GLITCH FLASH OVERLAY
+═══════════════════════════════════════════ */
+#glitch-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 998;
+  mix-blend-mode: screen;
+}
+
+/* ═══════════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════════ */
 @media (max-width: 768px) {
-  nav { padding: 0 20px; height: 64px; }
-  .nav-logo { font-size: 16px; }
-  .nav-links a { padding: 6px 10px; font-size: 10px; }
-  section { padding: 100px 20px 60px; }
-  #player-list-box { position: static; width: 100%; margin: 24px auto; max-height: none; }
-  .hero-title { font-size: 48px; }
-  footer { padding: 32px 20px; }
+  nav { padding: 0 16px; height: 60px; }
+  .nav-logo { font-size: 22px; }
+  .nav-logo::after { font-size: 22px; }
+  .nav-links a { padding: 6px 10px; font-size: 11px; letter-spacing: 1px; gap: 4px; }
+  section { padding: 80px 16px 60px; }
+  #player-list-box { position: static; width: 100%; max-height: none; margin: 20px auto; clip-path: none; }
+  .hero-title { font-size: 64px; }
+  .features-grid { grid-template-columns: 1fr; }
+  footer { padding: 32px 16px; }
+  body { cursor: auto; }
+  #cursor, #cursor-trail { display: none; }
 }
-
-@media (max-width: 520px) {
-  .nav-links { gap: 2px; }
-  .nav-links a { padding: 5px 8px; font-size: 9px; gap: 3px; }
-}
-
-/* DIVIDER */
-.section-divider {
-  width: 60px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--green), transparent);
-  margin: 0 auto 48px;
+@media (max-width: 480px) {
+  .nav-links a { padding: 5px 7px; font-size: 10px; }
+  .nav-logo::after { display: none; }
 }
 </style>
 </head>
 <body>
 
-<div class="blob blob-1"></div>
-<div class="blob blob-2"></div>
-<div class="blob blob-3"></div>
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-trail"></div>
 
+<!-- PARTICLES -->
+<canvas id="particle-canvas"></canvas>
+
+<!-- GLITCH OVERLAY -->
+<canvas id="glitch-overlay"></canvas>
+
+<!-- NAV -->
 <nav>
-  <div class="nav-logo">TPO SMP</div>
+  <div class="nav-logo">TPO</div>
   <ul class="nav-links">
-    <li><a href="#home" class="active" data-section="home">🏠 Home</a></li>
-    <li><a href="#vote" data-section="vote">🗳️ Vote</a></li>
-    <li><a href="#store" data-section="store">🛒 Store</a></li>
+    <li><a href="#home"   data-section="home"   class="active">🏠 Home</a></li>
+    <li><a href="#vote"   data-section="vote">🗳️ Vote</a></li>
+    <li><a href="#store"  data-section="store">🛒 Store</a></li>
     <li><a href="#unbans" data-section="unbans">🚫 Unbans</a></li>
-    <li><a href="#apply" data-section="apply">📝 Apply</a></li>
+    <li><a href="#apply"  data-section="apply">📝 Apply</a></li>
   </ul>
 </nav>
 
-<!-- HOME -->
+<!-- ══════════ HOME ══════════ -->
 <section id="home">
-  <div class="hero-eyebrow">
-    <span class="hero-dot"></span>
-    Minecraft Java Edition
+
+  <div class="hero-logo-wrap">
+    <img src="assets/Logo2.png" alt="TPO SMP" class="hero-logo"
+         onerror="this.style.background='var(--green3)';this.style.display='block'"/>
   </div>
 
-  <img src="assets/Logo2.png" alt="TPO SMP" class="hero-logo" onerror="this.style.display='none'"/>
-
   <h1 class="hero-title">
-    <span class="t-green">TPO</span> <span class="t-gold">SMP</span>
+    <span class="t1">TPO</span>
+    <span class="t2">SURVIVAL · COMMUNITY · ADVENTURE</span>
   </h1>
-  <p class="hero-sub">Survival · Community · Adventure</p>
 
-  <button class="ip-btn" id="ip-button">
-    tposmp.online
-    <span class="ip-sub" id="ip-subtext">Click to copy IP</span>
-  </button>
+  <div class="ip-section">
+    <button class="ip-btn" id="ip-button">
+      tposmp.online
+      <span class="ip-btn-sub" id="ip-subtext">// click to copy</span>
+    </button>
+  </div>
 
   <div class="player-count">
     <span class="player-count-num" id="player-count">—</span>
-    <span class="player-count-label">players online</span>
+    <span class="player-count-label">warriors online</span>
   </div>
 
-  <div class="features-section">
-    <p class="features-title">Everything you get</p>
-    <div class="features-grid" id="features-grid">
-      <!-- injected by JS -->
-    </div>
-  </div>
+  <p class="features-header">// server features</p>
+  <div class="features-grid" id="features-grid"></div>
+
 </section>
 
-<!-- VOTE -->
+<!-- ══════════ VOTE ══════════ -->
 <section id="vote">
   <div class="page-header">
-    <h2>Vote for TPO SMP</h2>
-    <div class="section-divider"></div>
-    <p>Every vote helps us grow. Cast yours on all platforms!</p>
+    <h2>VOTE</h2>
+    <div class="divider"></div>
+    <p>Every vote powers the server — cast all of them</p>
   </div>
   <div class="vote-grid">
     <a href="https://16bitmc.net/vote/218" target="_blank" class="vote-card">
-      <span class="vote-card-icon">🎮</span>
-      <span class="vote-card-name">16BitMC</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">🎮</span><span class="vote-name">16BitMC</span><span class="vote-cta">Vote →</span>
     </a>
     <a href="https://minecraftservers.org/vote/679213" target="_blank" class="vote-card">
-      <span class="vote-card-icon">🌐</span>
-      <span class="vote-card-name">MinecraftServers.org</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">🌐</span><span class="vote-name">MinecraftServers.org</span><span class="vote-cta">Vote →</span>
     </a>
     <a href="https://minecraft-server-list.com/server/515077/vote/" target="_blank" class="vote-card">
-      <span class="vote-card-icon">📋</span>
-      <span class="vote-card-name">Minecraft-Server-List</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">📋</span><span class="vote-name">Minecraft-Server-List</span><span class="vote-cta">Vote →</span>
     </a>
     <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/vote/" target="_blank" class="vote-card">
-      <span class="vote-card-icon">🪐</span>
-      <span class="vote-card-name">PlanetMinecraft</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">🪐</span><span class="vote-name">PlanetMinecraft</span><span class="vote-cta">Vote →</span>
     </a>
     <a href="https://topg.org/minecraft-servers/server-676484#vote" target="_blank" class="vote-card">
-      <span class="vote-card-icon">🏆</span>
-      <span class="vote-card-name">TopG.org</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">🏆</span><span class="vote-name">TopG.org</span><span class="vote-cta">Vote →</span>
     </a>
     <a href="https://votemc.com/tpo-smp.1471/vote" target="_blank" class="vote-card">
-      <span class="vote-card-icon">✅</span>
-      <span class="vote-card-name">VoteMC.com</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">✅</span><span class="vote-name">VoteMC.com</span><span class="vote-cta">Vote →</span>
     </a>
     <a href="https://minecraft-serverlist.com/server/3430/vote" target="_blank" class="vote-card">
-      <span class="vote-card-icon">📌</span>
-      <span class="vote-card-name">Minecraft-ServerList</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">📌</span><span class="vote-name">Minecraft-ServerList</span><span class="vote-cta">Vote →</span>
     </a>
     <a href="https://minecraft.buzz/vote/16729" target="_blank" class="vote-card">
-      <span class="vote-card-icon">⚡</span>
-      <span class="vote-card-name">MinecraftBuzz</span>
-      <span class="vote-card-cta">Vote Now →</span>
+      <span class="vote-icon">⚡</span><span class="vote-name">MinecraftBuzz</span><span class="vote-cta">Vote →</span>
     </a>
   </div>
 </section>
 
-<!-- STORE -->
+<!-- ══════════ STORE ══════════ -->
 <section id="store">
   <div class="page-header">
-    <h2>Server Store</h2>
-    <div class="section-divider"></div>
-    <p>Support the server and unlock exclusive perks</p>
+    <h2>STORE</h2>
+    <div class="divider"></div>
+    <p>Support the server — get exclusive perks</p>
   </div>
   <div class="iframe-wrap">
-    <iframe src="https://tposmp.craftingstore.net/category/512974" width="100%" height="1000" style="border:none;" allowfullscreen></iframe>
+    <iframe src="https://tposmp.craftingstore.net/category/512974"
+      width="100%" height="1000" style="border:none;display:block;" allowfullscreen></iframe>
   </div>
 </section>
 
-<!-- UNBANS -->
+<!-- ══════════ UNBANS ══════════ -->
 <section id="unbans">
   <div class="page-header">
-    <h2>Unban Appeals</h2>
-    <div class="section-divider"></div>
-    <p>Think your ban was unfair? Submit an appeal below.</p>
+    <h2>UNBAN APPEAL</h2>
+    <div class="divider"></div>
+    <p>Think you were banned unfairly? State your case</p>
   </div>
   <div class="iframe-wrap">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScqZRatsdF9R5bsKW6n-GTem4maJalnAvAq6Aprye4pSsBQdA/viewform?embedded=true" width="100%" height="1500" style="border:none;"></iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScqZRatsdF9R5bsKW6n-GTem4maJalnAvAq6Aprye4pSsBQdA/viewform?embedded=true"
+      width="100%" height="1500" style="border:none;display:block;"></iframe>
   </div>
 </section>
 
-<!-- APPLY -->
+<!-- ══════════ APPLY ══════════ -->
 <section id="apply">
   <div class="page-header">
-    <h2>Staff Application</h2>
-    <div class="section-divider"></div>
-    <p>Want to help shape the community? Apply to join the team.</p>
+    <h2>JOIN THE TEAM</h2>
+    <div class="divider"></div>
+    <p>Apply to become a staff member</p>
   </div>
   <div class="iframe-wrap">
-    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc-jusYDOTQ6DRIVJ5xBtNZe5wHRRacF0Dg0vphVmI0xiaJpQ/viewform?embedded=true" width="100%" height="2500" style="border:none;"></iframe>
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc-jusYDOTQ6DRIVJ5xBtNZe5wHRRacF0Dg0vphVmI0xiaJpQ/viewform?embedded=true"
+      width="100%" height="2500" style="border:none;display:block;"></iframe>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <p>&copy; 2025 TPO SMP — All rights reserved.</p>
+  <p class="footer-copy">&copy; 2025 TPO SMP — ALL RIGHTS RESERVED</p>
   <div class="social-row">
     <a href="https://discord.gg/2qhf6jCCya" class="soc-btn discord">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
       Discord
     </a>
-    <span class="soc-btn gray" data-label="YouTube" id="yt-btn">YouTube</span>
-    <span class="soc-btn gray" data-label="TikTok" id="tt-btn">TikTok</span>
+    <span class="soc-btn gray" id="yt-btn" data-label="YouTube">YouTube</span>
+    <span class="soc-btn gray" id="tt-btn" data-label="TikTok">TikTok</span>
   </div>
 </footer>
 
-<!-- PLAYER LIST -->
+<!-- ONLINE PLAYERS -->
 <div id="player-list-box" style="display:none;">
-  <h3>Online Now</h3>
-  <div id="player-list"><p style="color:var(--muted);font-size:11px;text-align:center;">Loading...</p></div>
+  <h3>// Online</h3>
+  <div id="player-list"><p style="color:rgba(200,255,200,0.3);font-size:11px;text-align:center;font-family:var(--font-mono)">loading...</p></div>
 </div>
 
 <script>
-// ─── FEATURES DATA ───
-const features = [
-  { icon: '🌍', label: 'Survival with <strong>10 Homes & 10 Claims</strong>' },
-  { icon: '💼', label: '<strong>Jobs System</strong> — up to 3 simultaneously' },
-  { icon: '🧪', label: '<strong>Silk-Touch Spawners</strong> & changeable types' },
-  { icon: '🦘', label: '<strong>JumpPads</strong> for fast traversal' },
-  { icon: '🟢', label: '<strong>XP Extract</strong> — bottle your experience' },
-  { icon: '😴', label: '<strong>1-Player Sleep</strong> — skip the night alone' },
-  { icon: '👻', label: '<strong>Phantoms Disabled</strong> — no more stress' },
-  { icon: '✨', label: '<strong>Custom Enchants</strong> — unique gear upgrades' },
-  { icon: '⚡', label: '<strong>Instant TP</strong> · unlimited /back · easy /RTP' },
-  { icon: '🎄', label: '<strong>Holiday Events</strong> with unique rewards' },
-  { icon: '🛒', label: '<strong>/ah</strong>, physical shops & chestshops' },
-  { icon: '🔐', label: '<strong>PrivateVaults</strong> & PlayerWarps' },
-  { icon: '🎙️', label: '<strong>SimpleVC</strong> — optional voice chat (1.21.10)' },
-  { icon: '🛡️', label: '<strong>Join the Staff Team</strong> — help us grow' },
+/* ══════════════════════════════════
+   FEATURES DATA
+══════════════════════════════════ */
+const FEATURES = [
+  { icon:'🌍', text:'Survival with <strong>10 Homes & 10 Claims</strong>' },
+  { icon:'💼', text:'<strong>Jobs System</strong> — up to 3 simultaneously' },
+  { icon:'🧪', text:'<strong>Silk-Touch Spawners</strong> & changeable types' },
+  { icon:'🦘', text:'<strong>JumpPads</strong> for fast traversal' },
+  { icon:'🟢', text:'<strong>XP Extract</strong> — bottle your experience' },
+  { icon:'😴', text:'<strong>1-Player Sleep</strong> — skip the night solo' },
+  { icon:'👻', text:'<strong>Phantoms Disabled</strong> — no more stress' },
+  { icon:'✨', text:'<strong>Custom Enchants</strong> — unique upgrades' },
+  { icon:'⚡', text:'<strong>Instant TP</strong> · unlimited /back · /RTP' },
+  { icon:'🎄', text:'<strong>Holiday Events</strong> with unique rewards' },
+  { icon:'🛒', text:'<strong>/ah</strong>, physical shops & chestshops' },
+  { icon:'🔐', text:'<strong>PrivateVaults</strong> & PlayerWarps' },
+  { icon:'🎙️', text:'<strong>Voice Chat</strong> via SimpleVC (1.21.10)' },
+  { icon:'🛡️', text:'<strong>Join the Staff Team</strong> — help us grow' },
 ];
 
 const grid = document.getElementById('features-grid');
-features.forEach(f => {
+FEATURES.forEach((f, i) => {
   const el = document.createElement('div');
   el.className = 'feat-card';
-  el.innerHTML = `<span class="feat-icon">${f.icon}</span><span class="feat-text">${f.label}</span>`;
+  el.style.animationDelay = `${0.6 + i * 0.04}s`;
+  el.innerHTML = `<span class="feat-icon">${f.icon}</span><span class="feat-text">${f.text}</span>`;
   grid.appendChild(el);
 });
 
-// ─── NAVIGATION ───
+/* ══════════════════════════════════
+   PARTICLE CANVAS
+══════════════════════════════════ */
+const canvas = document.getElementById('particle-canvas');
+const ctx = canvas.getContext('2d');
+let W, H, particles = [];
+
+function resize() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H + H;
+    this.size = Math.random() * 3 + 1;
+    this.speed = Math.random() * 0.6 + 0.2;
+    this.opacity = Math.random() * 0.5 + 0.1;
+    this.color = Math.random() > 0.85 ? '#ffcc00' : '#00ff88';
+    this.wobble = Math.random() * Math.PI * 2;
+    this.wobbleSpeed = (Math.random() - 0.5) * 0.02;
+  }
+  update() {
+    this.y -= this.speed;
+    this.wobble += this.wobbleSpeed;
+    this.x += Math.sin(this.wobble) * 0.4;
+    if (this.y < -10) this.reset();
+  }
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.opacity;
+    ctx.fillStyle = this.color;
+    if (this.size > 2.5) {
+      // minecraft dirt block pixel
+      ctx.fillRect(Math.floor(this.x), Math.floor(this.y), Math.ceil(this.size), Math.ceil(this.size));
+    } else {
+      ctx.fillRect(Math.floor(this.x), Math.floor(this.y), this.size, this.size);
+    }
+    ctx.restore();
+  }
+}
+
+for (let i = 0; i < 120; i++) {
+  const p = new Particle();
+  p.y = Math.random() * H; // start spread
+  particles.push(p);
+}
+
+function animParticles() {
+  ctx.clearRect(0, 0, W, H);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+/* ══════════════════════════════════
+   GLITCH OVERLAY
+══════════════════════════════════ */
+const gc = document.getElementById('glitch-overlay');
+const gx = gc.getContext('2d');
+
+function resizeGlitch() {
+  gc.width  = window.innerWidth;
+  gc.height = window.innerHeight;
+}
+resizeGlitch();
+window.addEventListener('resize', resizeGlitch);
+
+function doGlitch() {
+  if (Math.random() > 0.004) { requestAnimationFrame(doGlitch); return; }
+  const lines = Math.floor(Math.random() * 5) + 2;
+  for (let i = 0; i < lines; i++) {
+    const y = Math.random() * gc.height;
+    const h = Math.random() * 4 + 1;
+    const x = (Math.random() - 0.5) * 20;
+    gx.save();
+    gx.globalAlpha = Math.random() * 0.3;
+    gx.fillStyle = Math.random() > 0.5 ? '#00ff88' : '#ff2244';
+    gx.fillRect(x, y, gc.width, h);
+    gx.restore();
+  }
+  setTimeout(() => gx.clearRect(0, 0, gc.width, gc.height), 80);
+  requestAnimationFrame(doGlitch);
+}
+doGlitch();
+
+/* ══════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════ */
+const cursor = document.getElementById('cursor');
+const trail  = document.getElementById('cursor-trail');
+let mx = 0, my = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+  setTimeout(() => {
+    trail.style.left = mx + 'px';
+    trail.style.top  = my + 'px';
+  }, 80);
+});
+
+document.addEventListener('mousedown', () => {
+  cursor.style.transform = 'translate(-50%,-50%) scale(0.6)';
+  cursor.style.background = 'var(--green)';
+});
+document.addEventListener('mouseup', () => {
+  cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+  cursor.style.background = 'transparent';
+});
+
+/* ══════════════════════════════════
+   NAVIGATION
+══════════════════════════════════ */
 function openSection(id) {
   document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
@@ -682,53 +1016,92 @@ document.querySelectorAll('.nav-links a').forEach(a => {
   });
 });
 
-const hash = window.location.hash.slice(1);
-openSection(hash || 'home');
+const initHash = window.location.hash.slice(1);
+openSection(initHash || 'home');
 
-// ─── IP COPY ───
+/* ══════════════════════════════════
+   IP COPY
+══════════════════════════════════ */
 document.getElementById('ip-button').addEventListener('click', () => {
   navigator.clipboard.writeText('tposmp.online').then(() => {
     const sub = document.getElementById('ip-subtext');
-    sub.textContent = '✓ Copied!';
-    setTimeout(() => sub.textContent = 'Click to copy IP', 1800);
+    sub.textContent = '// ✓ copied!';
+    sub.style.color = 'var(--gold)';
+    setTimeout(() => { sub.textContent = '// click to copy'; sub.style.color = ''; }, 2000);
   });
 });
 
-// ─── COMING SOON BUTTONS ───
-['yt-btn', 'tt-btn'].forEach(id => {
+/* ══════════════════════════════════
+   COMING SOON BUTTONS
+══════════════════════════════════ */
+['yt-btn','tt-btn'].forEach(id => {
   const btn = document.getElementById(id);
-  const orig = btn.textContent;
-  btn.addEventListener('mouseenter', () => { btn.textContent = 'Coming Soon'; btn.style.color = 'var(--gold)'; });
-  btn.addEventListener('mouseleave', () => { btn.textContent = orig; btn.style.color = ''; });
+  const orig = btn.dataset.label;
+  btn.addEventListener('mouseenter', () => { btn.textContent = 'Coming Soon'; btn.style.color = 'var(--gold)'; btn.style.borderColor = 'rgba(255,204,0,0.3)'; });
+  btn.addEventListener('mouseleave', () => { btn.textContent = orig; btn.style.color = ''; btn.style.borderColor = ''; });
 });
 
-// ─── PLAYER FETCH ───
+/* ══════════════════════════════════
+   PLAYER FETCH
+══════════════════════════════════ */
 function fetchPlayers() {
   fetch('https://mcapi.us/server/status?ip=tposmp.online')
     .then(r => r.json())
     .then(data => {
       const online = data?.players?.now ?? 0;
-      const max = data?.players?.max ?? 0;
-      document.getElementById('player-count').textContent = `${online}/${max}`;
+      const max    = data?.players?.max ?? 0;
+      const countEl = document.getElementById('player-count');
+      // animate count up
+      let cur = 0;
+      const target = parseInt(online) || 0;
+      const step = Math.max(1, Math.floor(target / 20));
+      const ticker = setInterval(() => {
+        cur = Math.min(cur + step, target);
+        countEl.textContent = `${cur}/${max}`;
+        if (cur >= target) clearInterval(ticker);
+      }, 40);
+
       const listEl = document.getElementById('player-list');
       const sample = data?.players?.sample ?? [];
       if (!sample.length) {
-        listEl.innerHTML = '<p style="color:var(--muted);font-size:11px;text-align:center;">No players online</p>';
+        listEl.innerHTML = '<p style="color:rgba(200,255,200,0.3);font-size:11px;text-align:center;font-family:var(--font-mono)">no players online</p>';
         return;
       }
-      const sorted = [...sample].sort((a, b) => a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0);
+      const sorted = [...sample].sort((a,b) =>
+        a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0
+      );
       listEl.innerHTML = sorted.map(p => {
         const isTpo = p.name.toLowerCase() === 'tpo';
-        const uuid = (p.id || '').replace(/-/g, '');
-        const head = uuid ? `https://mc-heads.net/avatar/${uuid}/22` : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/22`;
-        return `<div class="player-entry${isTpo ? ' is-tpo' : ''}"><img src="${head}" alt="${p.name}"><span>${p.name}</span></div>`;
+        const uuid  = (p.id||'').replace(/-/g,'');
+        const head  = uuid
+          ? `https://mc-heads.net/avatar/${uuid}/20`
+          : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/20`;
+        return `<div class="player-entry${isTpo?' is-tpo':''}">
+          <img src="${head}" alt="${p.name}">
+          <span>${p.name}</span>
+        </div>`;
       }).join('');
     })
     .catch(() => {
       document.getElementById('player-count').textContent = '—';
-      document.getElementById('player-list').innerHTML = '<p style="color:var(--muted);font-size:11px;text-align:center;">Offline</p>';
+      document.getElementById('player-list').innerHTML =
+        '<p style="color:var(--red);font-size:11px;text-align:center;font-family:var(--font-mono)">server offline</p>';
     });
 }
+
+/* ══════════════════════════════════
+   HOVER GLOW ON NAV LINKS
+══════════════════════════════════ */
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('mouseenter', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1.8)';
+    cursor.style.borderColor = 'var(--gold)';
+  });
+  a.addEventListener('mouseleave', () => {
+    cursor.style.transform = 'translate(-50%,-50%) scale(1)';
+    cursor.style.borderColor = 'var(--green)';
+  });
+});
 </script>
 </body>
 </html>
