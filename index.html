@@ -4,375 +4,731 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
 <meta name="description" content="TPO SMP - Join our Minecraft server for land claim survival, friendly community, optional PvP areas, and seasonal events."/>
-<meta name="keywords" content="Minecraft, SMP, TPO SMP, Minecraft Server, Land Claim, PvP, Community, Events, Private vaults, /pv, 10 homes, 10 claims, new minecraft server, best minecraft server, survival minecraft server, faction server, minecraft multiplayer, minecraft online, minecraft economy, minecraft shops, minecraft quests, minecraft adventure, minecraft mini-games, minecraft builders, minecraft crafting, minecraft mods, minecraft plugins, minecraft spigot, minecraft bedrock, minecraft java edition, minecraft updates, minecraft tips, minecraft guides, minecraft tutorials, minecraft builds, minecraft houses, minecraft farms, minecraft redstone, minecraft pvp arenas, minecraft dungeons, minecraft bosses, minecraft enchanted items, minecraft treasure, minecraft magic, minecraft clans, minecraft events, minecraft competitions, minecraft tournaments, minecraft challenges, minecraft rewards, minecraft ranks, minecraft permissions, minecraft leveling, minecraft skills, minecraft achievements, minecraft party, minecraft friends, minecraft guilds, minecraft community events, minecraft player shops, minecraft market, minecraft economy system, minecraft teleport, minecraft portals, minecraft world, minecraft maps, minecraft realms, minecraft seeds, minecraft biomes, minecraft mobs, minecraft creatures, minecraft animals, minecraft pets, minecraft dragons, minecraft ores, minecraft mining, minecraft tools, minecraft weapons, minecraft armor, minecraft blocks, minecraft building, minecraft decoration, minecraft furniture, minecraft design, minecraft pixel art, minecraft landscapes, minecraft villages, minecraft towns, minecraft cities, minecraft roleplay, minecraft storytelling, minecraft survival tips, minecraft server guide, minecraft server hosting, minecraft server setup, minecraft community server, minecraft family-friendly, minecraft hardcore, minecraft creative, minecraft skyblock, minecraft challenges server"/>
 <title>TPO SMP - Minecraft Server</title>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "VideoGame",
-  "name": "TPO SMP",
-  "url": "https://tposmp.online",
-  "image": "https://tposmp.online/assets/Logo2.png",
-  "description": "TPO SMP - Experience the ultimate Minecraft server! Claim land, protect builds, enjoy optional PvP zones, 10 homes, private vaults, seasonal events, and a friendly, active community. Join thousands of players and start your adventure today!",
-  "publisher": {
-    "@type": "Organization",
-    "name": "TPO SMP",
-    "url": "https://tposmp.online"
-  },
-  "gamePlatform": "Minecraft Java Edition",
-  "offers": {
-    "@type": "Offer",
-    "url": "https://tposmp.craftingstore.net/category/512974",
-    "availability": "https://schema.org/InStock",
-    "priceCurrency": "USD"
-  }
-}
-</script>
-
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
-<link rel="icon" type="image/png" href="assets/tpoicon264.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-html, body {
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  background-color: #333333;
-  color: #fff;
-  font-family: 'Press Start 2P', cursive;
+:root {
+  --green: #4ade80;
+  --green-dark: #16a34a;
+  --green-glow: rgba(74,222,128,0.35);
+  --gold: #fbbf24;
+  --gold-glow: rgba(251,191,36,0.3);
+  --red: #ef4444;
+  --bg: #0a0f0a;
+  --bg2: #0d140d;
+  --bg3: #111a11;
+  --surface: rgba(255,255,255,0.04);
+  --border: rgba(74,222,128,0.18);
+  --text: #e8f5e9;
+  --muted: rgba(232,245,233,0.5);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
   overflow-x: hidden;
 }
-.minecraft-background { background-color: #333333; min-height: 100vh; padding-bottom: 50px; }
-.minecraft-nav { background: rgba(0,0,0,0.6); text-align: center; padding: 15px; }
-.nav-buttons { list-style: none; padding: 0; margin: 0; display: inline-flex; gap: 10px; }
-.nav-buttons .minecraft-button { background: #3c8527; color: #fff; padding: 8px 16px; text-decoration: none; border: 3px solid #2b611c; border-radius: 5px; cursor: pointer; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-.nav-buttons .minecraft-button:hover { transform: translateY(-6px); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
-.nav-buttons .minecraft-button.active { background: #63c244; }
-section { display: none; padding: 60px 20px; text-align: center; }
-section.active { display: block; }
-.main-logo { display: block; margin: 0 auto 20px auto; width: 200px; border-radius: 10px; }
-#ip-button { display: inline-block; font-size: 18px; margin-top: 20px; background: #3c8527; border: 3px solid #2b611c; color: #fff; padding: 10px 30px; cursor: pointer; border-radius: 5px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-#ip-button:hover { transform: translateY(-10px); box-shadow: 0 0 15px rgba(255,255,255,0.7); }
-#ip-subtext { display: block; font-size: 14px; color: #fff; margin-top: 6px; }
-.players-online { margin-top: 22px; }
-.players-online span, .players-online p { color: #FFD700; }
-.players-online span { font-size: 18px; font-weight: 700; }
-.players-online p { margin-top: 6px; font-size: 12px; }
-.offer-cards, .vote-cards { display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 24px; }
-.offer-card, .vote-card { background: rgba(20,20,20,0.85); border: 3px solid #3c8527; border-radius: 10px; width: 240px; padding: 18px; color: #fff; text-align: left; line-height: 1.3; font-size: 12px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
-.offer-card:hover, .vote-card:hover { transform: translateY(-10px) scale(1.05); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); }
-footer { background: rgba(0,0,0,0.7); text-align: center; padding: 30px 20px; margin-top: 50px; color: #fff; }
-.footer-content p { margin: 0 0 10px 0; font-size: 12px; }
-.social-links { display:flex; justify-content:center; gap:10px; }
-.minecraft-button { display: inline-block; background: #3c8527; color: #fff; padding: 10px 24px; text-decoration: none; border: 3px solid #2b611c; border-radius: 5px; cursor: pointer; font-size: 14px; font-family: 'Press Start 2P', cursive; transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease; }
-.minecraft-button:hover { transform: translateY(-4px); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
-.green-button { background: #3c8527; border: 3px solid #2b611c; }
-.gray-button { background: #555; border: 3px solid #444; color: #ccc; }
-.gray-button:hover { background: #666; color: #fff; }
-.mc-gold { color: #FFA500; } 
-.mc-darkred { color: #AA0000; }
 
-/* Player List Box */
+/* ─── NOISE OVERLAY ─── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ─── AMBIENT GLOW BLOBS ─── */
+.blob {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: 0;
+  animation: blobFloat 12s ease-in-out infinite;
+}
+.blob-1 { width: 500px; height: 500px; background: rgba(22,163,74,0.12); top: -100px; left: -100px; animation-delay: 0s; }
+.blob-2 { width: 400px; height: 400px; background: rgba(251,191,36,0.07); top: 40%; right: -80px; animation-delay: 4s; }
+.blob-3 { width: 350px; height: 350px; background: rgba(74,222,128,0.08); bottom: 10%; left: 20%; animation-delay: 7s; }
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(20px,-20px) scale(1.03); }
+  66% { transform: translate(-15px,15px) scale(0.97); }
+}
+
+/* ─── NAV ─── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 0 40px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(10,15,10,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--green);
+  text-shadow: 0 0 20px var(--green-glow);
+  letter-spacing: 2px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  list-style: none;
+}
+
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  color: var(--muted);
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-family: 'Inter', sans-serif;
+  text-transform: uppercase;
+}
+.nav-links a:hover, .nav-links a.active {
+  color: var(--green);
+  background: rgba(74,222,128,0.08);
+  border-color: var(--border);
+}
+
+/* ─── SECTIONS ─── */
+section { display: none; min-height: 100vh; padding: 120px 40px 80px; position: relative; z-index: 1; }
+section.active { display: block; }
+
+/* ─── HOME HERO ─── */
+#home {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-top: 140px;
+}
+#home.active { display: flex; }
+
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: rgba(74,222,128,0.06);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-dot {
+  width: 6px; height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.hero-logo {
+  width: 140px;
+  height: 140px;
+  border-radius: 24px;
+  border: 2px solid var(--border);
+  box-shadow: 0 0 60px var(--green-glow), 0 0 120px rgba(74,222,128,0.1);
+  animation: fadeUp 0.8s 0.1s ease both, logoGlow 4s ease infinite;
+  object-fit: cover;
+}
+
+@keyframes logoGlow {
+  0%,100% { box-shadow: 0 0 60px var(--green-glow), 0 0 120px rgba(74,222,128,0.1); }
+  50% { box-shadow: 0 0 80px rgba(74,222,128,0.5), 0 0 150px rgba(74,222,128,0.15); }
+}
+
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(48px, 8vw, 100px);
+  font-weight: 900;
+  line-height: 1;
+  margin: 28px 0 12px;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+.hero-title .t-green { color: var(--green); text-shadow: 0 0 40px var(--green-glow); }
+.hero-title .t-gold { color: var(--gold); text-shadow: 0 0 40px var(--gold-glow); }
+
+.hero-sub {
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 48px;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.ip-btn {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 40px;
+  background: linear-gradient(135deg, var(--green-dark), #15803d);
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  font-family: 'Cinzel', serif;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 0 30px rgba(74,222,128,0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  animation: fadeUp 0.8s 0.4s ease both;
+}
+.ip-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 40px rgba(74,222,128,0.4), inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.ip-sub { font-family: 'Inter', sans-serif; font-size: 11px; opacity: 0.7; letter-spacing: 2px; text-transform: uppercase; }
+
+.player-count {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: fadeUp 0.8s 0.5s ease both;
+}
+.player-count-num {
+  font-family: 'Cinzel', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  text-shadow: 0 0 20px var(--gold-glow);
+}
+.player-count-label { font-size: 12px; color: var(--muted); letter-spacing: 1px; }
+
+/* FEATURES GRID */
+.features-section {
+  margin-top: 80px;
+  width: 100%;
+  max-width: 1100px;
+  animation: fadeUp 0.8s 0.6s ease both;
+}
+
+.features-title {
+  font-family: 'Cinzel', serif;
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 16px;
+}
+
+.feat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.feat-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(74,222,128,0.04), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.feat-card:hover { border-color: rgba(74,222,128,0.4); transform: translateY(-2px); }
+.feat-card:hover::before { opacity: 1; }
+
+.feat-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+.feat-text { font-size: 13px; line-height: 1.6; color: var(--text); }
+.feat-text strong { color: var(--green); font-weight: 500; }
+
+/* ─── VOTE ─── */
+#vote { max-width: 900px; margin: 0 auto; }
+
+.page-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.page-header h2 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(28px, 4vw, 48px);
+  font-weight: 900;
+  color: var(--green);
+  text-shadow: 0 0 30px var(--green-glow);
+  margin-bottom: 12px;
+}
+.page-header p {
+  color: var(--muted);
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+.vote-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+
+.vote-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.vote-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.vote-card:hover { transform: translateY(-6px); border-color: var(--green); box-shadow: 0 12px 40px rgba(74,222,128,0.15); }
+.vote-card:hover::after { opacity: 1; }
+.vote-card-icon { font-size: 28px; }
+.vote-card-name { font-family: 'Cinzel', serif; font-size: 14px; font-weight: 600; color: var(--text); text-align: center; }
+.vote-card-cta {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--green);
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  margin-top: 4px;
+}
+
+/* ─── STORE ─── */
+#store { max-width: 1100px; margin: 0 auto; }
+
+.iframe-wrap {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--bg2);
+  box-shadow: 0 0 60px rgba(0,0,0,0.5);
+}
+
+/* ─── UNBANS / APPLY ─── */
+#unbans, #apply { max-width: 900px; margin: 0 auto; }
+
+/* ─── ONLINE PLAYERS ─── */
 #player-list-box {
   position: fixed;
-  top: 120px;
-  right: 20px;
-  background: rgba(0,0,0,0.75);
-  border: 3px solid #3c8527;
-  border-radius: 10px;
-  width: 220px;
-  max-height: 400px;
+  top: 88px;
+  right: 24px;
+  width: 210px;
+  background: rgba(10,15,10,0.9);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  z-index: 50;
+  backdrop-filter: blur(20px);
+  max-height: 420px;
   overflow-y: auto;
-  padding: 10px;
-  font-size: 10px;
-  z-index: 1000;
 }
-
-.offer-box {
-  background: rgba(20,20,20,0.85);
-  border: 3px solid #3c8527;
-  border-radius: 12px;
-  max-width: 850px;
-  margin: 30px auto;
-  padding: 20px 18px;
-  text-align: left;
-}
-
-.offer-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.offer-list li {
-  margin-bottom: 10px;
-}
-
-/* Minecraft color codes */
-.c7 { color: #FFFFFF; }   /* &f */
-.c6 { color: #FFAA00; }   /* &6 */
-
+#player-list-box::-webkit-scrollbar { width: 4px; }
+#player-list-box::-webkit-scrollbar-track { background: transparent; }
+#player-list-box::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 
 #player-list-box h3 {
+  font-family: 'Cinzel', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
   text-align: center;
-  color: #FFD700;
-  margin: 5px 0 10px 0;
-  font-size: 12px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
 }
+
 .player-entry {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 6px 0;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 5px 0;
+  transition: transform 0.2s;
 }
+.player-entry:hover { transform: translateX(3px); }
 .player-entry img {
-  width: 24px;
-  height: 24px;
-  border-radius: 3px;
-  border: 2px solid white;
-  transition: transform 0.2s ease;
+  width: 22px; height: 22px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
 }
-.player-entry span {
-  transition: transform 0.2s ease;
-}
-.player-entry:hover {
-  transform: scale(1.08);
-  box-shadow: 0 0 10px rgba(255,255,255,0.3);
-}
-@media (max-width: 720px) {
-  #player-list-box {
-    position: static;
-    margin: 20px auto;
-    width: 80%;
-  }
-}
-@media (max-width:520px){ .offer-card,.vote-card { width: 90%; } .main-logo { width: 160px; } }
+.player-entry span { font-size: 11px; color: var(--text); }
+.player-entry.is-tpo span { color: var(--red); font-weight: 600; }
 
-@media (max-width: 720px) {
-  .main-logo { width: 160px; margin-bottom: 16px; }
-  .offer-card, .vote-card { width: 90%; padding: 14px; font-size: 11px; }
-  #player-list-box { position: static; width: 90%; margin: 20px auto; max-height: none; font-size: 10px; }
-  .player-entry img { width: 20px; height: 20px; }
-  .nav-buttons { flex-wrap: wrap; justify-content: center; }
-  #ip-button { padding: 10px 20px; font-size: 16px; }
-  #ip-subtext { font-size: 12px; }
-  .footer-content p { font-size: 10px; }
-  .social-links .minecraft-button { padding: 8px 16px; font-size: 12px; }
+/* ─── FOOTER ─── */
+footer {
+  position: relative;
+  z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 48px 40px;
+  text-align: center;
+  background: rgba(10,15,10,0.7);
+}
+
+footer p { font-size: 12px; color: var(--muted); margin-bottom: 24px; letter-spacing: 1px; }
+
+.social-row { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+
+.soc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s;
+  border: 1px solid;
+  cursor: pointer;
+}
+.soc-btn.discord { background: rgba(88,101,242,0.15); border-color: rgba(88,101,242,0.4); color: #7289da; }
+.soc-btn.discord:hover { background: rgba(88,101,242,0.25); transform: translateY(-2px); }
+.soc-btn.gray { background: var(--surface); border-color: var(--border); color: var(--muted); }
+.soc-btn.gray:hover { color: var(--text); border-color: rgba(255,255,255,0.2); transform: translateY(-2px); }
+
+/* ─── ANIMATIONS ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  nav { padding: 0 20px; height: 64px; }
+  .nav-logo { font-size: 16px; }
+  .nav-links a { padding: 6px 10px; font-size: 10px; }
+  section { padding: 100px 20px 60px; }
+  #player-list-box { position: static; width: 100%; margin: 24px auto; max-height: none; }
+  .hero-title { font-size: 48px; }
+  footer { padding: 32px 20px; }
+}
+
+@media (max-width: 520px) {
+  .nav-links { gap: 2px; }
+  .nav-links a { padding: 5px 8px; font-size: 9px; gap: 3px; }
+}
+
+/* DIVIDER */
+.section-divider {
+  width: 60px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--green), transparent);
+  margin: 0 auto 48px;
 }
 </style>
 </head>
 <body>
-<div class="minecraft-background">
-  <header>
-    <nav class="minecraft-nav">
-      <ul class="nav-buttons">
 
-        <li><a href="#home" class="minecraft-button active">🏠 Home</a></li>
-        <li><a href="#vote" class="minecraft-button mc-darkred">🗳️ Vote</a></li>
-        <li><a href="#store" class="minecraft-button mc-darkred">🛒 Store</a></li>
-        <li><a href="#unbans" class="minecraft-button mc-gold">🚫 Unbans</a></li>
-        <li><a href="#apply" class="minecraft-button">📝 Apply</a></li>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
 
-      </ul>
-    </nav>
-  </header>
-
-  <section id="home" class="active">
-    <img src="assets/Logo2.png" alt="TPO SMP Logo" class="main-logo" />
-    <button id="ip-button">tposmp.online <span id="ip-subtext">Click to copy</span></button>
-    <div class="players-online"><span id="player-count">Loading...</span><p>Playing right now!</p></div>
-    <h2>What <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span> offers:</h2>
-<div class="offer-box">
-  <ul class="offer-list">
-    <li class="c7">🌍 Fun survival gameplay with 10 homes and 10 claims</li>
-    <li class="c6">💼 Exciting jobs (work up to 3 at the same time)</li>
-    <li class="c7">🧪 Silk-touch spawners & changeable spawner types with spawn eggs</li>
-    <li class="c6">🦘 JumpPads</li>
-    <li class="c7">🟢 XP Extract</li> 
-    <li class="c6">😴 One-player sleep system</li>
-    <li class="c7">👻 Phantoms disabled</li>
-    <li class="c6">✨ Custom Enchants</li>
-    <li class="c7">⚡ Instant teleportation + unlimited /back + easy /RTP</li>
-    <li class="c6">🎄 Creative and unique holiday events</li>
-    <li class="c7">🛒 /ah, physical shops, and chestshops</li>
-    <li class="c6">🔐 PrivateVaults & PlayerWarps</li>
-    <li class="c7">🎙️ SimpleVC mod (1.21.10) — optional voice chat</li>
-    <li class="c7">🛡️ Chance to join our growing staff team</li>
+<nav>
+  <div class="nav-logo">TPO SMP</div>
+  <ul class="nav-links">
+    <li><a href="#home" class="active" data-section="home">🏠 Home</a></li>
+    <li><a href="#vote" data-section="vote">🗳️ Vote</a></li>
+    <li><a href="#store" data-section="store">🛒 Store</a></li>
+    <li><a href="#unbans" data-section="unbans">🚫 Unbans</a></li>
+    <li><a href="#apply" data-section="apply">📝 Apply</a></li>
   </ul>
-</div>
+</nav>
 
-  </section>
+<!-- HOME -->
+<section id="home">
+  <div class="hero-eyebrow">
+    <span class="hero-dot"></span>
+    Minecraft Java Edition
+  </div>
 
-  <section id="vote">
-    <h2><span class="mc-darkred">Vote for</span> <span class="mc-gold">TPO</span> <span class="mc-darkred">SMP</span></h2>
-    <div class="vote-cards">
-      <a href="https://16bitmc.net/vote/218" target="_blank" class="vote-card">16BitMC</a>
-      <a href="https://minecraftservers.org/vote/679213" target="_blank" class="vote-card">MinecraftServers.org</a>
-      <a href="https://minecraft-server-list.com/server/515077/vote/" target="_blank" class="vote-card">Minecraft-Server-List.com</a>
-      <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/vote/" target="_blank" class="vote-card">PlanetMinecraft.com</a>
-      <a href="https://topg.org/minecraft-servers/server-676484#vote" target="_blank" class="vote-card">TopG.org</a>
-      <a href="https://votemc.com/tpo-smp.1471/vote" target="_blank" class="vote-card">VoteMC.com</a>
-      <a href="https://minecraft-serverlist.com/server/3430/vote" target="_blank" class="vote-card">Minecraft-ServerList.com</a>
-      <a href="https://minecraft.buzz/vote/16729" target="_blank" class="vote-card">MinecraftBuzz</a>
+  <img src="assets/Logo2.png" alt="TPO SMP" class="hero-logo" onerror="this.style.display='none'"/>
+
+  <h1 class="hero-title">
+    <span class="t-green">TPO</span> <span class="t-gold">SMP</span>
+  </h1>
+  <p class="hero-sub">Survival · Community · Adventure</p>
+
+  <button class="ip-btn" id="ip-button">
+    tposmp.online
+    <span class="ip-sub" id="ip-subtext">Click to copy IP</span>
+  </button>
+
+  <div class="player-count">
+    <span class="player-count-num" id="player-count">—</span>
+    <span class="player-count-label">players online</span>
+  </div>
+
+  <div class="features-section">
+    <p class="features-title">Everything you get</p>
+    <div class="features-grid" id="features-grid">
+      <!-- injected by JS -->
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="store">
-    <h2 class="mc-darkred">Store</h2>
-    <div style="max-width: 1000px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;">
-      <iframe 
-        src="https://tposmp.craftingstore.net/category/512974" 
-        width="100%" 
-        height="1000" 
-        style="border: none; background: rgba(0,0,0,0.3);"
-        allowfullscreen>
-      </iframe>
-    </div>
-  </section>
+<!-- VOTE -->
+<section id="vote">
+  <div class="page-header">
+    <h2>Vote for TPO SMP</h2>
+    <div class="section-divider"></div>
+    <p>Every vote helps us grow. Cast yours on all platforms!</p>
+  </div>
+  <div class="vote-grid">
+    <a href="https://16bitmc.net/vote/218" target="_blank" class="vote-card">
+      <span class="vote-card-icon">🎮</span>
+      <span class="vote-card-name">16BitMC</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+    <a href="https://minecraftservers.org/vote/679213" target="_blank" class="vote-card">
+      <span class="vote-card-icon">🌐</span>
+      <span class="vote-card-name">MinecraftServers.org</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+    <a href="https://minecraft-server-list.com/server/515077/vote/" target="_blank" class="vote-card">
+      <span class="vote-card-icon">📋</span>
+      <span class="vote-card-name">Minecraft-Server-List</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+    <a href="https://www.planetminecraft.com/server/tpo-smp-new-community-server-looking-for-new-members/vote/" target="_blank" class="vote-card">
+      <span class="vote-card-icon">🪐</span>
+      <span class="vote-card-name">PlanetMinecraft</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+    <a href="https://topg.org/minecraft-servers/server-676484#vote" target="_blank" class="vote-card">
+      <span class="vote-card-icon">🏆</span>
+      <span class="vote-card-name">TopG.org</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+    <a href="https://votemc.com/tpo-smp.1471/vote" target="_blank" class="vote-card">
+      <span class="vote-card-icon">✅</span>
+      <span class="vote-card-name">VoteMC.com</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+    <a href="https://minecraft-serverlist.com/server/3430/vote" target="_blank" class="vote-card">
+      <span class="vote-card-icon">📌</span>
+      <span class="vote-card-name">Minecraft-ServerList</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+    <a href="https://minecraft.buzz/vote/16729" target="_blank" class="vote-card">
+      <span class="vote-card-icon">⚡</span>
+      <span class="vote-card-name">MinecraftBuzz</span>
+      <span class="vote-card-cta">Vote Now →</span>
+    </a>
+  </div>
+</section>
 
+<!-- STORE -->
+<section id="store">
+  <div class="page-header">
+    <h2>Server Store</h2>
+    <div class="section-divider"></div>
+    <p>Support the server and unlock exclusive perks</p>
+  </div>
+  <div class="iframe-wrap">
+    <iframe src="https://tposmp.craftingstore.net/category/512974" width="100%" height="1000" style="border:none;" allowfullscreen></iframe>
+  </div>
+</section>
 
-  <!-- NEW UNBANS SECTION -->
+<!-- UNBANS -->
 <section id="unbans">
-  <h2 class="mc-darkred">Unban Appeals</h2>
-  <div 
-    style="max-width: 900px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;"
-  >
-    <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLScqZRatsdF9R5bsKW6n-GTem4maJalnAvAq6Aprye4pSsBQdA/viewform?embedded=true"
-      width="100%" 
-      height="1500" 
-      style="border:none; background: rgba(0,0,0,0.3);"
-    ></iframe>
+  <div class="page-header">
+    <h2>Unban Appeals</h2>
+    <div class="section-divider"></div>
+    <p>Think your ban was unfair? Submit an appeal below.</p>
+  </div>
+  <div class="iframe-wrap">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLScqZRatsdF9R5bsKW6n-GTem4maJalnAvAq6Aprye4pSsBQdA/viewform?embedded=true" width="100%" height="1500" style="border:none;"></iframe>
   </div>
 </section>
 
-  <section id="apply">
-  <h2 class="mc-darkred">Staff Application</h2>
-  <div 
-    style="max-width: 900px; margin: 0 auto; border: 3px solid #3c8527; border-radius: 12px; overflow: hidden;"
-  >
-    <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLSc-jusYDOTQ6DRIVJ5xBtNZe5wHRRacF0Dg0vphVmI0xiaJpQ/viewform?embedded=true"
-      width="100%" 
-      height="2500" 
-      style="border:none; background: rgba(0,0,0,0.3);"
-    ></iframe>
+<!-- APPLY -->
+<section id="apply">
+  <div class="page-header">
+    <h2>Staff Application</h2>
+    <div class="section-divider"></div>
+    <p>Want to help shape the community? Apply to join the team.</p>
+  </div>
+  <div class="iframe-wrap">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc-jusYDOTQ6DRIVJ5xBtNZe5wHRRacF0Dg0vphVmI0xiaJpQ/viewform?embedded=true" width="100%" height="2500" style="border:none;"></iframe>
   </div>
 </section>
 
-  <footer>
-    <div class="footer-content">
-      <p>&copy; 2025 TPO SMP. All rights reserved.</p>
-      <div class="social-links">
-        <a href="https://discord.gg/2qhf6jCCya" class="minecraft-button green-button">Discord</a>
-        <a href="#" class="minecraft-button gray-button" data-original="YouTube">YouTube</a>
-        <a href="#" class="minecraft-button gray-button" data-original="TikTok">TikTok</a>
-      </div>
-    </div>
-  </footer>
-</div>
+<!-- FOOTER -->
+<footer>
+  <p>&copy; 2025 TPO SMP — All rights reserved.</p>
+  <div class="social-row">
+    <a href="https://discord.gg/2qhf6jCCya" class="soc-btn discord">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+      Discord
+    </a>
+    <span class="soc-btn gray" data-label="YouTube" id="yt-btn">YouTube</span>
+    <span class="soc-btn gray" data-label="TikTok" id="tt-btn">TikTok</span>
+  </div>
+</footer>
 
+<!-- PLAYER LIST -->
 <div id="player-list-box" style="display:none;">
-  <h3>Online Players</h3>
-  <div id="player-list">Loading...</div>
+  <h3>Online Now</h3>
+  <div id="player-list"><p style="color:var(--muted);font-size:11px;text-align:center;">Loading...</p></div>
 </div>
 
 <script>
-// Navigation
-function openSection(target) {
+// ─── FEATURES DATA ───
+const features = [
+  { icon: '🌍', label: 'Survival with <strong>10 Homes & 10 Claims</strong>' },
+  { icon: '💼', label: '<strong>Jobs System</strong> — up to 3 simultaneously' },
+  { icon: '🧪', label: '<strong>Silk-Touch Spawners</strong> & changeable types' },
+  { icon: '🦘', label: '<strong>JumpPads</strong> for fast traversal' },
+  { icon: '🟢', label: '<strong>XP Extract</strong> — bottle your experience' },
+  { icon: '😴', label: '<strong>1-Player Sleep</strong> — skip the night alone' },
+  { icon: '👻', label: '<strong>Phantoms Disabled</strong> — no more stress' },
+  { icon: '✨', label: '<strong>Custom Enchants</strong> — unique gear upgrades' },
+  { icon: '⚡', label: '<strong>Instant TP</strong> · unlimited /back · easy /RTP' },
+  { icon: '🎄', label: '<strong>Holiday Events</strong> with unique rewards' },
+  { icon: '🛒', label: '<strong>/ah</strong>, physical shops & chestshops' },
+  { icon: '🔐', label: '<strong>PrivateVaults</strong> & PlayerWarps' },
+  { icon: '🎙️', label: '<strong>SimpleVC</strong> — optional voice chat (1.21.10)' },
+  { icon: '🛡️', label: '<strong>Join the Staff Team</strong> — help us grow' },
+];
+
+const grid = document.getElementById('features-grid');
+features.forEach(f => {
+  const el = document.createElement('div');
+  el.className = 'feat-card';
+  el.innerHTML = `<span class="feat-icon">${f.icon}</span><span class="feat-text">${f.label}</span>`;
+  grid.appendChild(el);
+});
+
+// ─── NAVIGATION ───
+function openSection(id) {
   document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
-  const section = document.getElementById(target);
-  if(section) section.classList.add('active');
-
-  document.querySelectorAll('.nav-buttons .minecraft-button').forEach(b => b.classList.remove('active'));
-  const btn = document.querySelector(`.nav-buttons .minecraft-button[href="#${target}"]`);
-  if(btn) btn.classList.add('active');
-
-  const playerBox = document.getElementById('player-list-box');
-  if(target === 'home') {
-    playerBox.style.display = 'block';
-    fetchPlayerCountAndList();
-  } else {
-    playerBox.style.display = 'none';
-  }
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const sec = document.getElementById(id);
+  const btn = document.querySelector(`.nav-links a[data-section="${id}"]`);
+  if (sec) sec.classList.add('active');
+  if (btn) btn.classList.add('active');
+  const box = document.getElementById('player-list-box');
+  if (id === 'home') { box.style.display = 'block'; fetchPlayers(); }
+  else box.style.display = 'none';
+  window.scrollTo(0, 0);
 }
 
-document.querySelectorAll('.nav-buttons .minecraft-button').forEach(btn => {
-  btn.addEventListener('click', e => {
+document.querySelectorAll('.nav-links a').forEach(a => {
+  a.addEventListener('click', e => {
     e.preventDefault();
-    const target = btn.getAttribute('href').substring(1);
-    openSection(target);
-    history.replaceState(null, null, `#${target}`);
+    const id = a.dataset.section;
+    history.replaceState(null, null, `#${id}`);
+    openSection(id);
   });
 });
 
-const hash = window.location.hash.substring(1);
-if(hash) openSection(hash);
-else openSection('home');
+const hash = window.location.hash.slice(1);
+openSection(hash || 'home');
 
-function fetchPlayerCountAndList() {
+// ─── IP COPY ───
+document.getElementById('ip-button').addEventListener('click', () => {
+  navigator.clipboard.writeText('tposmp.online').then(() => {
+    const sub = document.getElementById('ip-subtext');
+    sub.textContent = '✓ Copied!';
+    setTimeout(() => sub.textContent = 'Click to copy IP', 1800);
+  });
+});
+
+// ─── COMING SOON BUTTONS ───
+['yt-btn', 'tt-btn'].forEach(id => {
+  const btn = document.getElementById(id);
+  const orig = btn.textContent;
+  btn.addEventListener('mouseenter', () => { btn.textContent = 'Coming Soon'; btn.style.color = 'var(--gold)'; });
+  btn.addEventListener('mouseleave', () => { btn.textContent = orig; btn.style.color = ''; });
+});
+
+// ─── PLAYER FETCH ───
+function fetchPlayers() {
   fetch('https://mcapi.us/server/status?ip=tposmp.online')
-    .then(res => res.json())
+    .then(r => r.json())
     .then(data => {
       const online = data?.players?.now ?? 0;
       const max = data?.players?.max ?? 0;
       document.getElementById('player-count').textContent = `${online}/${max}`;
       const listEl = document.getElementById('player-list');
       const sample = data?.players?.sample ?? [];
-      if (!sample || sample.length === 0) {
-        listEl.innerHTML = '<p style="color:#aaa;">No players online</p>';
+      if (!sample.length) {
+        listEl.innerHTML = '<p style="color:var(--muted);font-size:11px;text-align:center;">No players online</p>';
         return;
       }
-      const reordered = sample.sort((a, b) =>
-        a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0
-      );
-      listEl.innerHTML = reordered.map(p => {
+      const sorted = [...sample].sort((a, b) => a.name.toLowerCase() === 'tpo' ? -1 : b.name.toLowerCase() === 'tpo' ? 1 : 0);
+      listEl.innerHTML = sorted.map(p => {
         const isTpo = p.name.toLowerCase() === 'tpo';
-        const uuid = p.id?.replace(/-/g, '');
-        const headUrl = uuid
-          ? `https://mc-heads.net/avatar/${uuid}/32`
-          : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/32`;
-        return `
-          <div class="player-entry">
-            <img src="${headUrl}" alt="${p.name}">
-            <span style="color: ${isTpo ? '#AA0000' : ''};">${p.name}</span>
-          </div>
-        `;
+        const uuid = (p.id || '').replace(/-/g, '');
+        const head = uuid ? `https://mc-heads.net/avatar/${uuid}/22` : `https://mc-heads.net/avatar/${encodeURIComponent(p.name)}/22`;
+        return `<div class="player-entry${isTpo ? ' is-tpo' : ''}"><img src="${head}" alt="${p.name}"><span>${p.name}</span></div>`;
       }).join('');
     })
     .catch(() => {
-      document.getElementById('player-count').textContent = 'Error';
-      document.getElementById('player-list').innerHTML = '<p style="color:red;">Error loading</p>';
+      document.getElementById('player-count').textContent = '—';
+      document.getElementById('player-list').innerHTML = '<p style="color:var(--muted);font-size:11px;text-align:center;">Offline</p>';
     });
 }
-
-document.getElementById('ip-button').addEventListener('click', () => {
-  navigator.clipboard.writeText('tposmp.online').then(() => {
-    const sub = document.getElementById('ip-subtext');
-    sub.textContent = 'Copied!';
-    setTimeout(()=> sub.textContent = 'Click to copy', 1500);
-  });
-});
-
-document.querySelectorAll('.social-links .gray-button').forEach(button => {
-  button.addEventListener('mouseenter', () => {
-    button.textContent = 'Coming Soon';
-    button.style.color = 'yellow';
-  });
-  button.addEventListener('mouseleave', () => {
-    button.textContent = button.getAttribute('data-original');
-    button.style.color = '';
-  });
-});
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
